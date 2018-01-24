@@ -5,10 +5,19 @@
  */
 package view;
 
+import javafx.fxml.FXML;
+
 /**
  *
  * @author System32
  */
-public class VistaPrincipal {
-    
+public class VistaPrincipalController {
+
+
+
+    @FXML
+    public void prueba(){
+
+    }
 }
+
