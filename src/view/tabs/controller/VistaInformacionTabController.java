@@ -3,26 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view;
+package view.tabs.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 
 /**
+ * FXML Controller class
  *
  * @author System32
  */
-public class VistaPrincipalController implements Initializable{
+public class VistaInformacionTabController implements Initializable {
 
-    
-    
+    /**
+     * Initializes the controller class.
+     */
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-
-    }
-
-
+    public void initialize(URL url, ResourceBundle rb) {
+        // TODO
+    }    
+    
 }
-

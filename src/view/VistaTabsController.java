@@ -10,19 +10,18 @@ import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 
 /**
+ * FXML Controller class
  *
  * @author System32
  */
-public class VistaPrincipalController implements Initializable{
+public class VistaTabsController implements Initializable {
 
-    
-    
+    /**
+     * Initializes the controller class.
+     */
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-
-    }
-
-
+    public void initialize(URL url, ResourceBundle rb) {
+        // TODO
+    }    
+    
 }
-
