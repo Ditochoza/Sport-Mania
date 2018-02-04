@@ -7,23 +7,60 @@ and open the template in the editor.
     Created on : 25-ene-2018, 15:26:31
     Author     : Victor
 */
-
-
-* {
-    -fx-primary : #2A2E37;
-    -fx-secondary : #FFFF8D;
-    -fx-primarytext : #B2B2B2;
-    -fx-blue: #1976D2;
-    -fx-red: #FF0000;
+.root{
+    -fx-font-family: "Verdana";
 }
 
-/*Menu bar Styling*/
-.menu-bar{
-    -fx-base : -fx-primary;
-    -fx-background-color: -fx-primary;
+.background {
+    -fx-background-color: #1d1d1d;
+}
+.table-view {
+    -fx-base: #1d1d1d;
+    -fx-control-inner-background: #1d1d1d;
+    -fx-background-color: #2962ff;
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+    -fx-padding: 5;
+}
+.table-view .column-header-background {
+    -fx-background-color: transparent;
 }
 
-.context-menu
-{
-    -fx-background-color:  derive(-fx-primary, 20%);
+.table-view .column-header, .table-view .filler {
+    -fx-size: 30;
+    -fx-border-width: 0 0 1 0;
+    -fx-background-color: transparent;
+    -fx-border-color: 
+        transparent
+        transparent
+        #ffffff 
+        transparent;
+    -fx-border-insets: 0 10 1 0;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-alignment: center-left;
+    -fx-opacity: 1;
+    -fx-font-weight: normal;
+}
+
+.table-view:focused .table-row-cell:filled:focused:selected {
+    -fx-background-color: -fx-focus-color;
+}
+
+.split-pane-divider {
+    -fx-padding: 0 0.2 0 0.2;
+    -fx-background-color: #1d1d1d;
+}
+
+.split-pane {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #ffffff;
+}
+
+#MainSplitPane > .split-pane-divider{
+    -fx-padding: 0 2 0 2;
+    -fx-border-color: transparent #1d1d1d transparent #1d1d1d;
+    -fx-background-color: transparent, derive(#1d1d1d,20%);
 }
