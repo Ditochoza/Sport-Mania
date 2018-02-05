@@ -50,3 +50,24 @@ public class Main extends Application {
     }
     
 }
+
+/*
+1. Futbol
+    1.1 pelota_futbol
+    1.2 zapatilla_futbol
+    1.3 equipacion_futbol
+    1.4 cono_futbol
+    1.5 guantes_futbol
+2.Beisbol
+    2.1 bate_beisbol
+    2.2 guantes_beisbol
+    2.3 pelota_beisbol
+    2.4 pechera_beisbol
+    2.5 casco_beisbol
+3.Golf
+    3.1 pelota_golf
+    3.2 palo_golf
+    3.3 banderin_golf
+    3.4 guantes_golf
+    3.5 caddy_golf
+*/
