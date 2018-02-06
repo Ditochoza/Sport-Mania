@@ -3,25 +3,37 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view.tabs.controller;
+package view;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
+import model.Producto;
 
 /**
  * FXML Controller class
  *
- * @author System32
+ * @author vntnc
  */
 public class VistaInformacionTabController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
+   
+   private Producto filaSeleccionadaProducto;
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+    
+    
+        
+    
+    // recibo la fila seleccionada de VistaTabController que a su vez lo ha recibido de VistaProductosTabController
+    public void setFilaInformacion(Producto newValue){
+        this.filaSeleccionadaProducto = newValue;
+        System.out.println(filaSeleccionadaProducto.getCodigo());
+    }
+    
     
 }

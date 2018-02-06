@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view.tabs.controller;
+package view;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -12,16 +12,17 @@ import javafx.fxml.Initializable;
 /**
  * FXML Controller class
  *
- * @author System32
+ * @author vntnc
  */
-public class VistaProductosTabController implements Initializable {
+public class VistaEstadisticasTabController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
+    
+    
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
     }    
-    
+   
 }

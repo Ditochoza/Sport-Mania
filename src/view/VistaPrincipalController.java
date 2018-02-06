@@ -7,22 +7,29 @@ package view;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.image.ImageView;
 
 /**
+ * FXML Controller class
  *
- * @author System32
+ * @author vntnc
  */
-public class VistaPrincipalController implements Initializable{
+public class VistaPrincipalController implements Initializable {
 
     
+    
+    @FXML MenuBar menuBar;
+    @FXML Menu primerMenu;
+    @FXML Menu segundoMenu;
+    @FXML Menu terceroMenu;
     
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-
-    }
-
-
+    public void initialize(URL url, ResourceBundle rb) {
+        // TODO
+    }    
+    
 }
-
