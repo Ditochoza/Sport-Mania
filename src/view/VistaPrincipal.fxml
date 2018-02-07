@@ -13,8 +13,8 @@
             <items>
               <MenuItem mnemonicParsing="false" text="Nuevo" />
                   <MenuItem mnemonicParsing="false" text="Abrir" />
-                  <MenuItem mnemonicParsing="false" text="Guardar como" />
                   <MenuItem mnemonicParsing="false" text="Guardar" />
+                  <MenuItem mnemonicParsing="false" text="Guardar como" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="About">
