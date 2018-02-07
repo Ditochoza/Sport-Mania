@@ -74,12 +74,7 @@ public class VistaTabsController implements Initializable {
         setToolTips();
 
     }
-    
-    // con el click recibido de VistaProductosTabController puedo cambiar de tab al seleccionar un producto de la tabla
-    public void setTabInformacion(){
-  
-        
-    }
+   
     
     public void activarTabs(){
          informacionTab.setDisable(false);

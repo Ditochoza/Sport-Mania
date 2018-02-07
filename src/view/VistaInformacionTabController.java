@@ -23,10 +23,7 @@ public class VistaInformacionTabController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-    
-    
+    }   
         
     
     // recibo la fila seleccionada de VistaTabController que a su vez lo ha recibido de VistaProductosTabController
