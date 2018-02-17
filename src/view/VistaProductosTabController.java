@@ -29,7 +29,7 @@ import model.Producto;
  */
 public class VistaProductosTabController implements Initializable {
 
-    private VistaTabsController tabsControllerr;
+    private VistaTabsController tabsControler;
 
     private Producto filaSeleccionada;
 
@@ -91,8 +91,6 @@ public class VistaProductosTabController implements Initializable {
             editar.setDisable(false);
             borrar.setDisable(false);
 
-            // activo los tabs de VistaTabsControlador al seleccionar un elemento de la tabla y envio el objecto seleccionado
-            tabsControllerr.activarTabs();
             this.filaSeleccionada = (Producto) newValue;
 
         });
@@ -103,7 +101,9 @@ public class VistaProductosTabController implements Initializable {
             public void handle(MouseEvent mouseEvent) {
                 if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
                     if (mouseEvent.getClickCount() == 2) {
-                        tabsControllerr.setFilaInformacion(filaSeleccionada);
+                        // activo los tabs
+                        tabsControler.activarTabs();
+                        tabsControler.setFilaInformacion(filaSeleccionada);
                         System.out.println("Double clicked");
                     }
                 }
@@ -114,11 +114,13 @@ public class VistaProductosTabController implements Initializable {
                 -> {
             // cambio de tab al hacer click en ir a detalles boton, llamando al controller de los tabs general (VistaTabsController)
             // envio el objeto con los datos a VistaTabsControler para despues reenviarlo a VistaInformacionTabController
-            tabsControllerr.setFilaInformacion(this.filaSeleccionada);
+            // activo los tabs
+            tabsControler.activarTabs();
+            tabsControler.setFilaInformacion(this.filaSeleccionada);
 
         });
 
-        borrar.setOnMouseClicked(e
+        borrar.setOnMouseClicked((MouseEvent e)
                 -> {
             String borrarString = " > Código: " + filaSeleccionada.getCodigo() + "\n > Nombre: " + filaSeleccionada.getNombre() + "\n > Stock: " + filaSeleccionada.getStock() + " uds."
                     + "\n > Precio: " + filaSeleccionada.getPrecio() + " €" + "\n > Fecha Alta: " + filaSeleccionada.getFechaAlta();
@@ -135,6 +137,10 @@ public class VistaProductosTabController implements Initializable {
             alert.showAndWait();
 
             if (alert.getResult() == ButtonType.YES) {
+                // si se selecciona un producto que está abierto en la tab información, se deshabilitan las tabs
+                if (filaSeleccionada.getCodigo().equals(tabsControler.getCodigoInformacionProducto())) {
+                    tabsControler.desactivarTabs();
+                }
                 tablaProductos.getItems().remove(tablaProductos.getSelectionModel().getSelectedIndex());
             }
 
@@ -152,8 +158,12 @@ public class VistaProductosTabController implements Initializable {
 
     }
 
-    public void comunicacionControlador(VistaTabsController tabsControllerr) {
-        this.tabsControllerr = tabsControllerr;
+    public void comunicacionControlador(VistaTabsController tabsController) {
+        this.tabsControler = tabsController;
+    }
+
+    void eliminarProductoTabla(Producto filaSeleccionadaProducto) {
+        tablaProductos.getItems().remove(filaSeleccionadaProducto);
     }
 
 }
