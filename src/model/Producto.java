@@ -27,30 +27,34 @@ import javafx.scene.image.ImageView;
  */
 public class Producto {
 
-    private  StringProperty codigo;
-    private  StringProperty nombre;
-    private  IntegerProperty stock;
-    private  DoubleProperty precios;
-    
+    private StringProperty codigo;
+    private StringProperty nombre;
+    private StringProperty categoria;
+    private IntegerProperty stock;
+    private DoubleProperty precios;
+
     private ObjectProperty foto;
+    private StringProperty rutaFoto;
     private StringProperty descripcion;
     private StringProperty codigoBarras;
     private StringProperty fechaAlta;
     private StringProperty fechaModificacion;
-    
-    public Producto(){
-        this(null,null,null,null,null,null);
+
+    public Producto() {
+        this(null, null, null, null, null, null, null, null);
     }
 
-    public Producto(String codigo, String nombre, Integer stock, Double precios,
-                    ImageView foto, String descripcion) {
+    public Producto(String codigo, String nombre, String categoria, Integer stock, Double precios,
+            ImageView foto, String descripcion, String rutaFoto) {
 
         this.codigo = new SimpleStringProperty(codigo);
         this.nombre = new SimpleStringProperty(nombre);
+        this.categoria = new SimpleStringProperty(categoria);
         this.stock = new SimpleIntegerProperty(stock);
         this.precios = new SimpleDoubleProperty(precios);
-        
+
         this.foto = new SimpleObjectProperty(foto);
+        this.rutaFoto = new SimpleStringProperty(rutaFoto);
         this.descripcion = new SimpleStringProperty(descripcion);
         this.fechaAlta = new SimpleStringProperty(new SimpleDateFormat("dd/MM/yyy HH:mm").format(Calendar.getInstance().getTime()));
         this.fechaModificacion = new SimpleStringProperty(new SimpleDateFormat("dd/MM/yyy HH:mm").format(Calendar.getInstance().getTime()));
@@ -58,76 +62,82 @@ public class Producto {
     }
 
     // foto
-    public ObjectProperty fotoProperty(){
+    public ObjectProperty fotoProperty() {
         return this.foto;
     }
-    
-    public void setFoto(ImageView image){
+
+    public void setFoto(ImageView image) {
         this.foto.set(image);
     }
-      public Object getFoto(){
+
+    public Object getFoto() {
         return foto.get();
     }
     
-   
-    
-     //descripcion
-    public String getDescripcion(){
+    public String getRutaFoto() {
+        return this.rutaFoto.get();
+    }
+
+    public void setRutaFoto(String rutaFoto) {
+        this.rutaFoto.set(rutaFoto);
+    }
+
+    public StringProperty rutaFotoProperty() {
+        return rutaFoto;
+    }
+
+    //descripcion
+    public String getDescripcion() {
         return this.descripcion.get();
     }
-     
-    public void setDescripcion(String descripcion){
+
+    public void setDescripcion(String descripcion) {
         this.descripcion.set(descripcion);
     }
-    
-    public StringProperty descripcionProperty(){
+
+    public StringProperty descripcionProperty() {
         return descripcion;
     }
-    
+
     // codigo barras
-    public String getcodigoBarras(){
+    public String getcodigoBarras() {
         return this.codigoBarras.get();
     }
-     
-    public void setcodigoBarras(String codigoBarras){
+
+    public void setcodigoBarras(String codigoBarras) {
         this.codigoBarras.set(codigoBarras);
     }
-    
-    public StringProperty codigoBarrasProperty(){
+
+    public StringProperty codigoBarrasProperty() {
         return codigoBarras;
     }
-    
+
     //fecha alta
-    public String getFechaAlta(){
+    public String getFechaAlta() {
         return fechaAlta.get();
     }
-    
-    
-    public void setFechaAlta(String date){
+
+    public void setFechaAlta(String date) {
         this.fechaAlta.set(date);
     }
-    
-    public StringProperty fechaAltaProperty(){
+
+    public StringProperty fechaAltaProperty() {
         return fechaAlta;
     }
-    
+
     //fecha modificacion
-    
-    public String getFechaModificacion(){
+    public String getFechaModificacion() {
         return fechaModificacion.get();
     }
-    
-    
-    public void setFechaModificacion(String date){
+
+    public void setFechaModificacion(String date) {
         this.fechaModificacion.set(date);
     }
-    
-    public StringProperty fechaModificacionProperty(){
+
+    public StringProperty fechaModificacionProperty() {
         return fechaModificacion;
     }
-    
-    
-    
+
     // nombre
     public String getNombre() {
         return this.nombre.get();
@@ -139,6 +149,19 @@ public class Producto {
 
     public StringProperty nombreProperty() {
         return nombre;
+    }
+    
+    // categoria
+    public String getCategoria() {
+        return this.categoria.get();
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria.set(categoria);
+    }
+
+    public StringProperty categoriaProperty() {
+        return categoria;
     }
 
     // precios
