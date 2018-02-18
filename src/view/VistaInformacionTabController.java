@@ -8,7 +8,10 @@ package view;
 import com.jfoenix.controls.JFXTextField;
 import java.io.File;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.ResourceBundle;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -19,6 +22,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import model.Producto;
 
@@ -31,6 +35,12 @@ public class VistaInformacionTabController implements Initializable {
 
     private Producto filaSeleccionadaProducto;
     private VistaTabsController tabsController;
+
+    private String nombreOld;
+    private String precioOld;
+    private String descripcionOld;
+    private String categoriaOld;
+    private String stockOld;
 
     // datos
     @FXML
@@ -109,75 +119,101 @@ public class VistaInformacionTabController implements Initializable {
         });
 
         editar.setOnMouseClicked(e -> {
+            nombreOld = nombreProducto.getText();
+            precioOld = precioProducto.getText();
+            descripcionOld = descripcionProducto.getText();
+            categoriaOld = categoriaProducto.getText();
+            stockOld = stockProducto.getText();
+            
             modoEditar(true);
         });
 
         cancelar.setOnMouseClicked(e -> {
+            nombreProducto.setText(nombreOld);
+            precioProducto.setText(precioOld);
+            descripcionProducto.setText(descripcionOld);
+            categoriaProducto.setText(categoriaOld);
+            stockProducto.setText(stockOld);
+            
             modoEditar(false);
         });
 
-        guardar.setOnMouseClicked(e -> {
-            System.out.println("Guardar");
-            String erroresString = "";
+        guardar.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent e) {
+                System.out.println("Guardar");
+                String erroresString = "";
 
-            if (nombreProducto.getText().isEmpty()) {
-                erroresString += " - El nombre no puede quedar vacío\n";
-                nombreProducto.setUnFocusColor(Color.RED);
-            } else {
-                nombreProducto.setUnFocusColor(Color.rgb(42, 46, 55));
-            }
+                // errores nombre producto
+                if (nombreProducto.getText().isEmpty()) {
+                    erroresString += " - El nombre no puede quedar vacío\n";
+                    nombreProducto.setUnFocusColor(Color.RED);
+                } else {
+                    nombreProducto.setUnFocusColor(Color.rgb(42, 46, 55));
+                }
 
-            if (!precioProducto.getText().isEmpty()) {
-                try {
-                    Double valor = Double.valueOf(precioProducto.getText());
-                    precioProducto.setUnFocusColor(Color.rgb(42, 46, 55));
-                } catch (NumberFormatException ex) {
-                    erroresString += " - El precio debe ser un número\n";
+                // errores precio producto
+                if (!precioProducto.getText().isEmpty()) {
+                    try {
+                        Double valor = Double.valueOf(precioProducto.getText());
+                        precioProducto.setUnFocusColor(Color.rgb(42, 46, 55));
+                    } catch (NumberFormatException ex) {
+                        erroresString += " - El precio debe ser un número\n";
+                        precioProducto.setUnFocusColor(Color.RED);
+                    }
+                } else {
+                    erroresString += " - El precio no puede quedar vacío\n";
                     precioProducto.setUnFocusColor(Color.RED);
                 }
-            } else {
-                erroresString += " - El precio no puede quedar vacío\n";
-                precioProducto.setUnFocusColor(Color.RED);
-            }
 
-            if (descripcionProducto.getText().isEmpty()) {
-                erroresString += " - La descripción no puede quedar vacía\n";
-                descripcionProducto.setUnFocusColor(Color.RED);
-            } else {
-                descripcionProducto.setUnFocusColor(Color.rgb(42, 46, 55));
-            }
+                //errores descripcion producto
+                if (descripcionProducto.getText().isEmpty()) {
+                    erroresString += " - La descripción no puede quedar vacía\n";
+                    descripcionProducto.setUnFocusColor(Color.RED);
+                } else {
+                    descripcionProducto.setUnFocusColor(Color.rgb(42, 46, 55));
+                }
 
-            if (categoriaProducto.getText().isEmpty()) {
-                erroresString += " - La categoría no puede quedar vacía\n";
-                categoriaProducto.setUnFocusColor(Color.RED);
-            } else {
-                categoriaProducto.setUnFocusColor(Color.rgb(42, 46, 55));
-            }
-            
-            if (!stockProducto.getText().isEmpty()) {
-                try {
-                    int valor = Integer.valueOf(stockProducto.getText());
-                    stockProducto.setUnFocusColor(Color.rgb(42, 46, 55));
-                } catch (NumberFormatException ex) {
-                    erroresString += " - El stock debe ser un número\n";
+                //errores categoria producto
+                if (categoriaProducto.getText().isEmpty()) {
+                    erroresString += " - La categoría no puede quedar vacía\n";
+                    categoriaProducto.setUnFocusColor(Color.RED);
+                } else {
+                    categoriaProducto.setUnFocusColor(Color.rgb(42, 46, 55));
+                }
+
+                //errores stock producto
+                if (!stockProducto.getText().isEmpty()) {
+                    try {
+                        int valor = Integer.valueOf(stockProducto.getText());
+                        stockProducto.setUnFocusColor(Color.rgb(42, 46, 55));
+                    } catch (NumberFormatException ex) {
+                        erroresString += " - El stock debe ser un número\n";
+                        stockProducto.setUnFocusColor(Color.RED);
+                    }
+                } else {
+                    erroresString += " - El stock no puede quedar vacío\n";
                     stockProducto.setUnFocusColor(Color.RED);
                 }
-            } else {
-                erroresString += " - El stock no puede quedar vacío\n";
-                stockProducto.setUnFocusColor(Color.RED);
-            }
 
-            if (!erroresString.isEmpty()) {
-                Alert alert;
+                if (!erroresString.isEmpty()) {
+                    Alert alert;
+                    alert = new Alert(Alert.AlertType.WARNING, "Se han encontrado los siguientes errores:\n\n" + erroresString, ButtonType.OK);
+                    alert.setHeaderText("Confirmación de borrado");
+                    DialogPane dialogAlert = alert.getDialogPane();
+                    dialogAlert.getStylesheets().add(VistaInformacionTabController.this.getClass().getResource("../css/modena_dark.css").toExternalForm());
+                    alert.showAndWait();
+                } else {
+                    System.out.println("Sin errores. Guardando...");
+                    filaSeleccionadaProducto.setNombre(nombreProducto.getText());
+                    filaSeleccionadaProducto.setPrecio(Double.valueOf(precioProducto.getText()));
+                    filaSeleccionadaProducto.setDescripcion(descripcionProducto.getText());
+                    filaSeleccionadaProducto.setCategoria(categoriaProducto.getText());
+                    filaSeleccionadaProducto.setStock(Integer.valueOf(stockProducto.getText()));
+                    filaSeleccionadaProducto.setFechaModificacion(new SimpleDateFormat("dd/MM/yyy HH:mm").format(Calendar.getInstance().getTime()));
 
-                alert = new Alert(Alert.AlertType.WARNING, "Se han encontrado los siguientes errores:\n\n" + erroresString, ButtonType.OK);
-                alert.setHeaderText("Confirmación de borrado");
-
-                DialogPane dialogAlert = alert.getDialogPane();
-                dialogAlert.getStylesheets().add(getClass().getResource("../css/modena_dark.css").toExternalForm());
-                alert.showAndWait();
-            }else{
-                System.out.println("Sin errores");
+                    tabsController.actualizarTabla();
+                }
             }
         });
     }

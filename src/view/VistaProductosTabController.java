@@ -172,8 +172,11 @@ public class VistaProductosTabController implements Initializable {
         this.tabsControler = tabsController;
     }
 
-    void eliminarProductoTabla(Producto filaSeleccionadaProducto) {
+    public void eliminarProductoTabla(Producto filaSeleccionadaProducto) {
         tablaProductos.getItems().remove(filaSeleccionadaProducto);
     }
-
+    
+    public void actualizarTabla(){
+        tablaProductos.refresh();
+    }
 }

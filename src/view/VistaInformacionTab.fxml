@@ -28,7 +28,7 @@
                             <items>
                                 <HBox alignment="CENTER">
                                     <children>
-                                        <ImageView fx:id="imagenProducto" fitHeight="50.0" fitWidth="50.0" preserveRatio="true" />
+                                        <ImageView fx:id="imagenProducto" fitHeight="150.0" fitWidth="150.0" preserveRatio="true" HBox.hgrow="ALWAYS" />
                                     </children>
                                 </HBox>
                                 <AnchorPane>
@@ -166,18 +166,18 @@
                                         </Label>
                                         <HBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
                                             <children>
-                                                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
-                                                    <image>
-                                                        <Image url="@../../../../../../../../../Desktop/Otras%20cosas/220px-Wikipedia_barcode_128.svg.png" />
-                                                    </image>
+                                                <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
+                                       <image>
+                                          <Image url="@../img/others/barCode.jpg" />
+                                       </image>
                                                 </ImageView>
                                             </children>
                                         </HBox>
                                         <HBox alignment="CENTER" layoutX="10.0" layoutY="39.0" spacing="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="35.0">
                                             <children>
                                                 <Label text="Cantidad:" />
-                                                <JFXComboBox editable="true" prefHeight="23.0" prefWidth="0.0" promptText="0" />
-                                                <JFXButton style="-fx-background-color: #eceff1;" text="Crear" textAlignment="CENTER">
+                                                <JFXComboBox editable="true" focusColor="#e6e600" prefHeight="23.0" prefWidth="0.0" promptText="0" unFocusColor="#2a2e37" />
+                                                <JFXButton id="botonCrearCodigoBarras" ripplerFill="#2a2e37" text="Crear" textAlignment="CENTER" HBox.hgrow="NEVER">
                                                     <font>
                                                         <Font size="14.0" />
                                                     </font>

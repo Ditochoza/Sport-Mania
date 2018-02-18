@@ -12,22 +12,38 @@
 
 
 /*botones style*/
-.button{
+.button {
     -fx-text-fill: whitesmoke;
     -fx-border-radius:20;
     -fx-background-color: -fx-primary;
     -fx-border-color: whitesmoke;
 }
 
-.button:hover{
+.button:hover {
     -fx-border-color: -fx-secondary;
     -fx-text-fill: white;
     -fx-background-color: -fx-primary;
     -fx-cursor:hand;
     -fx-font-weight:bold;
-
-
 }
+
+#botonCrearCodigoBarras{
+    -fx-font-weight: normal;
+    -fx-text-fill: black;
+    -fx-border-radius:0;
+    -fx-background-color: #eceff1;
+    -fx-border-color: transparent;
+}
+
+#botonCrearCodigoBarras:hover{
+    -fx-border-color: transparent;
+    -fx-text-fill: black;
+    -fx-background-color: #eceff1;
+    -fx-cursor: hand;
+    -fx-font-weight: normal;
+}
+
+
 
 /* estilo tabs */
 .tab-pane {
@@ -170,4 +186,15 @@
     -fx-text-fill: white;
     -fx-background-color: -fx-primary;
 
+}
+
+
+/** splitPane estilos **/
+.split-pane{
+    -fx-background-color: white;
+}
+
+.split-pane .split-pane-divider{
+    -fx-background-color:-fx-primary;
+    -fx-padding: 0.25;
 }
