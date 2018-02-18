@@ -104,6 +104,7 @@ public class VistaProductosTabController implements Initializable {
                         // activo los tabs
                         tabsControler.activarTabs();
                         tabsControler.setFilaInformacion(filaSeleccionada);
+                        tabsControler.editarProducto(false);
                         System.out.println("Double clicked");
                     }
                 }
@@ -117,6 +118,7 @@ public class VistaProductosTabController implements Initializable {
             // activo los tabs
             tabsControler.activarTabs();
             tabsControler.setFilaInformacion(this.filaSeleccionada);
+            tabsControler.editarProducto(false);
 
         });
 
@@ -144,6 +146,14 @@ public class VistaProductosTabController implements Initializable {
                 tablaProductos.getItems().remove(tablaProductos.getSelectionModel().getSelectedIndex());
             }
 
+        });
+        
+        
+        
+        editar.setOnMouseClicked(e ->{
+            tabsControler.activarTabs();
+            tabsControler.setFilaInformacion(filaSeleccionada);
+            tabsControler.editarProducto(true);
         });
 
     }

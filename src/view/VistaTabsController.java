@@ -118,4 +118,8 @@ public class VistaTabsController implements Initializable {
         estadisticasTab.setDisable(true);
     }
 
+    void editarProducto(boolean mode) {
+       informacionController.modoEditar(mode);
+    }
+
 }

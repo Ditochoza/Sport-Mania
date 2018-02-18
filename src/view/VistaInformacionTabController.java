@@ -58,7 +58,9 @@ public class VistaInformacionTabController implements Initializable {
     @FXML
     Button editar;
     @FXML
-    Button detalles;
+    Button cancelar;
+    @FXML
+    Button guardar;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -105,10 +107,56 @@ public class VistaInformacionTabController implements Initializable {
             }
 
         });
+        
+        editar.setOnMouseClicked(e ->{
+            modoEditar(true);
+        });
+        
+        cancelar.setOnMouseClicked(e -> {
+            modoEditar(false);
+        });
     }
     
     public String getCodigo(){
         return filaSeleccionadaProducto.getCodigo();
+    }
+
+    public void modoEditar(boolean mode) {
+        if (mode) {
+            nombreProducto.setFocusColor(Color.rgb(230, 230, 0));
+            nombreProducto.setUnFocusColor(Color.rgb(42, 46, 55));
+            precioProducto.setFocusColor(Color.rgb(230, 230, 0));
+            precioProducto.setUnFocusColor(Color.rgb(42, 46, 55));
+            descripcionProducto.setFocusColor(Color.rgb(230, 230, 0));
+            descripcionProducto.setUnFocusColor(Color.rgb(42, 46, 55));
+            categoriaProducto.setFocusColor(Color.rgb(230, 230, 0));
+            categoriaProducto.setUnFocusColor(Color.rgb(42, 46, 55));
+            stockProducto.setFocusColor(Color.rgb(230, 230, 0));
+            stockProducto.setUnFocusColor(Color.rgb(42, 46, 55));
+        }else{
+            nombreProducto.setFocusColor(Color.TRANSPARENT);
+            nombreProducto.setUnFocusColor(Color.TRANSPARENT);
+            precioProducto.setFocusColor(Color.TRANSPARENT);
+            precioProducto.setUnFocusColor(Color.TRANSPARENT);
+            descripcionProducto.setFocusColor(Color.TRANSPARENT);
+            descripcionProducto.setUnFocusColor(Color.TRANSPARENT);
+            categoriaProducto.setFocusColor(Color.TRANSPARENT);
+            categoriaProducto.setUnFocusColor(Color.TRANSPARENT);
+            stockProducto.setFocusColor(Color.TRANSPARENT);
+            stockProducto.setUnFocusColor(Color.TRANSPARENT);
+        }
+        
+        nombreProducto.setEditable(mode);
+        precioProducto.setEditable(mode);
+        descripcionProducto.setEditable(mode);
+        categoriaProducto.setEditable(mode);
+        stockProducto.setEditable(mode);
+        
+        anadir.setVisible(!mode);
+        borrar.setVisible(!mode);
+        editar.setVisible(!mode);
+        cancelar.setVisible(mode);
+        guardar.setVisible(mode);
     }
 
 }
