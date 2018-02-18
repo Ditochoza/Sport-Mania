@@ -176,8 +176,8 @@
                                         <HBox alignment="CENTER" layoutX="10.0" layoutY="39.0" spacing="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="35.0">
                                             <children>
                                                 <Label text="Cantidad:" />
-                                                <JFXComboBox editable="true" focusColor="#e6e600" prefHeight="23.0" prefWidth="0.0" promptText="0" unFocusColor="#2a2e37" />
-                                                <JFXButton id="botonCrearCodigoBarras" ripplerFill="#2a2e37" text="Crear" textAlignment="CENTER" HBox.hgrow="NEVER">
+                                                <JFXComboBox fx:id="comboBoxCodigosBarras" editable="true" focusColor="#e6e600" prefHeight="23.0" prefWidth="0.0" unFocusColor="#2a2e37" />
+                                                <JFXButton id="botonCrearCodigoBarras" fx:id="crear" ripplerFill="#2a2e37" text="Crear" textAlignment="CENTER" HBox.hgrow="NEVER">
                                                     <font>
                                                         <Font size="14.0" />
                                                     </font>
