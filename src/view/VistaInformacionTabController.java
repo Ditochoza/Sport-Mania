@@ -49,7 +49,7 @@ public class VistaInformacionTabController implements Initializable {
     private JFXTextField fechaModificacionProducto;
     @FXML
     private ImageView imagenProducto;
-    
+
     // botones
     @FXML
     Button anadir;
@@ -75,7 +75,7 @@ public class VistaInformacionTabController implements Initializable {
     public void setFilaInformacion(Producto newValue) {
         this.filaSeleccionadaProducto = newValue;
         System.out.println(filaSeleccionadaProducto.getCodigo());
-        
+
         imagenProducto.setImage(new Image(getClass().getResource(filaSeleccionadaProducto.getRutaFoto()).toExternalForm()));
         nombreProducto.setText(filaSeleccionadaProducto.getNombre());
         precioProducto.setText(String.valueOf(filaSeleccionadaProducto.getPrecio()));
@@ -107,17 +107,82 @@ public class VistaInformacionTabController implements Initializable {
             }
 
         });
-        
-        editar.setOnMouseClicked(e ->{
+
+        editar.setOnMouseClicked(e -> {
             modoEditar(true);
         });
-        
+
         cancelar.setOnMouseClicked(e -> {
             modoEditar(false);
         });
+
+        guardar.setOnMouseClicked(e -> {
+            System.out.println("Guardar");
+            String erroresString = "";
+
+            if (nombreProducto.getText().isEmpty()) {
+                erroresString += " - El nombre no puede quedar vacío\n";
+                nombreProducto.setUnFocusColor(Color.RED);
+            } else {
+                nombreProducto.setUnFocusColor(Color.rgb(42, 46, 55));
+            }
+
+            if (!precioProducto.getText().isEmpty()) {
+                try {
+                    Double valor = Double.valueOf(precioProducto.getText());
+                    precioProducto.setUnFocusColor(Color.rgb(42, 46, 55));
+                } catch (NumberFormatException ex) {
+                    erroresString += " - El precio debe ser un número\n";
+                    precioProducto.setUnFocusColor(Color.RED);
+                }
+            } else {
+                erroresString += " - El precio no puede quedar vacío\n";
+                precioProducto.setUnFocusColor(Color.RED);
+            }
+
+            if (descripcionProducto.getText().isEmpty()) {
+                erroresString += " - La descripción no puede quedar vacía\n";
+                descripcionProducto.setUnFocusColor(Color.RED);
+            } else {
+                descripcionProducto.setUnFocusColor(Color.rgb(42, 46, 55));
+            }
+
+            if (categoriaProducto.getText().isEmpty()) {
+                erroresString += " - La categoría no puede quedar vacía\n";
+                categoriaProducto.setUnFocusColor(Color.RED);
+            } else {
+                categoriaProducto.setUnFocusColor(Color.rgb(42, 46, 55));
+            }
+            
+            if (!stockProducto.getText().isEmpty()) {
+                try {
+                    int valor = Integer.valueOf(stockProducto.getText());
+                    stockProducto.setUnFocusColor(Color.rgb(42, 46, 55));
+                } catch (NumberFormatException ex) {
+                    erroresString += " - El stock debe ser un número\n";
+                    stockProducto.setUnFocusColor(Color.RED);
+                }
+            } else {
+                erroresString += " - El stock no puede quedar vacío\n";
+                stockProducto.setUnFocusColor(Color.RED);
+            }
+
+            if (!erroresString.isEmpty()) {
+                Alert alert;
+
+                alert = new Alert(Alert.AlertType.WARNING, "Se han encontrado los siguientes errores:\n\n" + erroresString, ButtonType.OK);
+                alert.setHeaderText("Confirmación de borrado");
+
+                DialogPane dialogAlert = alert.getDialogPane();
+                dialogAlert.getStylesheets().add(getClass().getResource("../css/modena_dark.css").toExternalForm());
+                alert.showAndWait();
+            }else{
+                System.out.println("Sin errores");
+            }
+        });
     }
-    
-    public String getCodigo(){
+
+    public String getCodigo() {
         return filaSeleccionadaProducto.getCodigo();
     }
 
@@ -133,7 +198,7 @@ public class VistaInformacionTabController implements Initializable {
             categoriaProducto.setUnFocusColor(Color.rgb(42, 46, 55));
             stockProducto.setFocusColor(Color.rgb(230, 230, 0));
             stockProducto.setUnFocusColor(Color.rgb(42, 46, 55));
-        }else{
+        } else {
             nombreProducto.setFocusColor(Color.TRANSPARENT);
             nombreProducto.setUnFocusColor(Color.TRANSPARENT);
             precioProducto.setFocusColor(Color.TRANSPARENT);
@@ -145,13 +210,13 @@ public class VistaInformacionTabController implements Initializable {
             stockProducto.setFocusColor(Color.TRANSPARENT);
             stockProducto.setUnFocusColor(Color.TRANSPARENT);
         }
-        
+
         nombreProducto.setEditable(mode);
         precioProducto.setEditable(mode);
         descripcionProducto.setEditable(mode);
         categoriaProducto.setEditable(mode);
         stockProducto.setEditable(mode);
-        
+
         anadir.setVisible(!mode);
         borrar.setVisible(!mode);
         editar.setVisible(!mode);
