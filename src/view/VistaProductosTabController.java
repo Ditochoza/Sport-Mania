@@ -8,7 +8,10 @@ package view;
 import com.jfoenix.controls.JFXComboBox;
 import controller.Inventario;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,6 +24,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import model.Producto;
 
 /**
@@ -61,7 +65,7 @@ public class VistaProductosTabController implements Initializable {
     Button editar;
     @FXML
     Button detalles;
-    
+
     // combo box
     @FXML
     JFXComboBox categoria;
@@ -81,18 +85,15 @@ public class VistaProductosTabController implements Initializable {
         precioColumn.setCellValueFactory(cellData -> cellData.getValue().preciosProperty());
         fechaAlta.setCellValueFactory(cellData -> cellData.getValue().fechaAltaProperty());
         imagenProducto.setCellValueFactory(cellData -> cellData.getValue().fotoProperty());
-        
+
         /*for (int i = 0; i < ; i++) {
             comboBoxCodigosBarras.getItems().add(i + 1);
         }*/
-
         listeners();
-        
 
     }
 
     public void listeners() {
-
         tablaProductos.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue)
                 -> {
@@ -157,10 +158,8 @@ public class VistaProductosTabController implements Initializable {
             }
 
         });
-        
-        
-        
-        editar.setOnMouseClicked(e ->{
+
+        editar.setOnMouseClicked(e -> {
             tabsControler.activarTabs();
             tabsControler.setFilaInformacion(filaSeleccionada);
             tabsControler.editarProducto(true);
@@ -172,9 +171,10 @@ public class VistaProductosTabController implements Initializable {
     public void setInventarioTabProductos(Inventario inventario) {
 
         this.inventario = inventario;
-
         //Añado la lista obervable a la tabla
         tablaProductos.setItems(this.inventario.getProductos());
+
+        rellenarComboBox();
 
     }
 
@@ -185,8 +185,29 @@ public class VistaProductosTabController implements Initializable {
     public void eliminarProductoTabla(Producto filaSeleccionadaProducto) {
         tablaProductos.getItems().remove(filaSeleccionadaProducto);
     }
-    
-    public void actualizarTabla(){
+
+    public void actualizarTabla() {
         tablaProductos.refresh();
+    }
+
+    private void rellenarComboBox() {
+        ArrayList<Producto> la = new ArrayList<>(inventario.getProductos());
+        ArrayList<String> categorias = new ArrayList<>();
+
+        for (int i = 0; i < la.size(); i++) {
+            boolean repetido = false;
+            for (int j = 0; j < categorias.size(); j++) {
+                if (categorias.get(j).equals(la.get(i).getCategoria())) {
+                    repetido = true;
+                }
+            }
+            if (!repetido) {
+                categorias.add(la.get(i).getCategoria());
+            }
+        }
+
+        for (int i = 0; i < categorias.size(); i++) {
+            categoria.getItems().add(categorias.get(i));
+        }
     }
 }

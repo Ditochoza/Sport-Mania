@@ -265,9 +265,10 @@ public class VistaInformacionTabController implements Initializable {
 
     public String getCodigo() {
         String codigo = "";
-        try{
+        try {
             codigo = filaSeleccionadaProducto.getCodigo();
-        }catch(NullPointerException ex){}
+        } catch (NullPointerException ex) {
+        }
         return codigo;
     }
 
@@ -280,7 +281,7 @@ public class VistaInformacionTabController implements Initializable {
             descripcionOld = descripcionProducto.getText();
             categoriaOld = categoriaProducto.getText();
             stockOld = stockProducto.getText();
-            
+
             nombreProducto.setFocusColor(Color.rgb(230, 230, 0));
             nombreProducto.setUnFocusColor(Color.rgb(42, 46, 55));
             precioProducto.setFocusColor(Color.rgb(230, 230, 0));

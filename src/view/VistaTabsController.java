@@ -116,10 +116,10 @@ public class VistaTabsController implements Initializable {
     }
 
     public void editarProducto(boolean mode) {
-       informacionController.modoEditar(mode);
+        informacionController.modoEditar(mode);
     }
-    
-    public void actualizarTabla(){
+
+    public void actualizarTabla() {
         productosController.actualizarTabla();
     }
 
