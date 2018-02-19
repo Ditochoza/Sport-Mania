@@ -54,7 +54,6 @@ public class VistaTabsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         informacionTab.setDisable(true);
-        estadisticasTab.setDisable(true);
 
         // envio este controlador a VistaProductosTabController y a VistaInformacionTabController
         productosController.comunicacionControlador(this);
@@ -76,7 +75,6 @@ public class VistaTabsController implements Initializable {
 
     public void activarTabs() {
         informacionTab.setDisable(false);
-        estadisticasTab.setDisable(false);
     }
 
     public void setFilaInformacion(Producto newValue) {
@@ -115,7 +113,6 @@ public class VistaTabsController implements Initializable {
 
     public void desactivarTabs() {
         informacionTab.setDisable(true);
-        estadisticasTab.setDisable(true);
     }
 
     public void editarProducto(boolean mode) {

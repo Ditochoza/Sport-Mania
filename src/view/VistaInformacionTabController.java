@@ -12,14 +12,12 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.ResourceBundle;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -37,12 +35,12 @@ public class VistaInformacionTabController implements Initializable {
     private VistaTabsController tabsController;
 
     // datos antes de la edición
+    private String rutaOld;
     private String nombreOld;
     private String precioOld;
     private String descripcionOld;
     private String categoriaOld;
     private String stockOld;
-    private String rutaOld;
 
     // datos
     @FXML
@@ -121,7 +119,7 @@ public class VistaInformacionTabController implements Initializable {
             Alert alert;
 
             alert = new Alert(Alert.AlertType.WARNING, "Contenido de la fila a borrar:\n\n" + borrarString + "\n\n¿Borrar definitivamente?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
-            alert.setHeaderText("Confirmación de borrado");
+            alert.setHeaderText("CONFIRMACIÓN DE BORRADO");
 
             //css dialog pane
             DialogPane dialogAlert = alert.getDialogPane();
@@ -208,7 +206,7 @@ public class VistaInformacionTabController implements Initializable {
             if (!erroresString.isEmpty()) {
                 Alert alert;
                 alert = new Alert(Alert.AlertType.WARNING, "Se han encontrado los siguientes errores:\n\n" + erroresString + "\n\nResuelva los errores para poder continuar", ButtonType.OK);
-                alert.setHeaderText("Error");
+                alert.setHeaderText("ERROR");
                 DialogPane dialogAlert = alert.getDialogPane();
                 dialogAlert.getStylesheets().add(VistaInformacionTabController.this.getClass().getResource("../css/modena_dark.css").toExternalForm());
                 alert.showAndWait();
@@ -253,7 +251,7 @@ public class VistaInformacionTabController implements Initializable {
             if (!erroresString.isEmpty()) {
                 Alert alert;
                 alert = new Alert(Alert.AlertType.WARNING, "Se han encontrado los siguientes errores:\n\n" + erroresString + "\n\nResuelva los errores para poder continuar", ButtonType.OK);
-                alert.setHeaderText("Error");
+                alert.setHeaderText("ERROR");
                 DialogPane dialogAlert = alert.getDialogPane();
                 dialogAlert.getStylesheets().add(VistaInformacionTabController.this.getClass().getResource("../css/modena_dark.css").toExternalForm());
                 alert.showAndWait();
@@ -266,7 +264,11 @@ public class VistaInformacionTabController implements Initializable {
     }
 
     public String getCodigo() {
-        return filaSeleccionadaProducto.getCodigo();
+        String codigo = "";
+        try{
+            codigo = filaSeleccionadaProducto.getCodigo();
+        }catch(NullPointerException ex){}
+        return codigo;
     }
 
     public void modoEditar(boolean mode) {

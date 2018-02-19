@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
@@ -45,6 +46,7 @@
             <Button fx:id="editar" mnemonicParsing="false" prefHeight="20.0" prefWidth="80.0" text="Editar" />
             <Button fx:id="borrar" mnemonicParsing="false" prefHeight="20.0" prefWidth="80.0" text="Borrar" />
              <Pane HBox.hgrow="ALWAYS" />
+            <JFXComboBox fx:id="categoria" focusColor="#f0f000" labelFloat="true" promptText="Categoría" unFocusColor="WHITE" />
             <Button fx:id="detalles" mnemonicParsing="false" prefHeight="20.0" prefWidth="95.0" text="Ir a detalles">
                <HBox.margin>
                   <Insets />

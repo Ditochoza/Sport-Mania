@@ -5,6 +5,7 @@
  */
 package view;
 
+import com.jfoenix.controls.JFXComboBox;
 import controller.Inventario;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -60,6 +61,10 @@ public class VistaProductosTabController implements Initializable {
     Button editar;
     @FXML
     Button detalles;
+    
+    // combo box
+    @FXML
+    JFXComboBox categoria;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -76,8 +81,13 @@ public class VistaProductosTabController implements Initializable {
         precioColumn.setCellValueFactory(cellData -> cellData.getValue().preciosProperty());
         fechaAlta.setCellValueFactory(cellData -> cellData.getValue().fechaAltaProperty());
         imagenProducto.setCellValueFactory(cellData -> cellData.getValue().fotoProperty());
+        
+        /*for (int i = 0; i < ; i++) {
+            comboBoxCodigosBarras.getItems().add(i + 1);
+        }*/
 
         listeners();
+        
 
     }
 
