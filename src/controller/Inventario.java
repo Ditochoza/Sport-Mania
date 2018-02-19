@@ -10,33 +10,29 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
-import static javafx.application.Application.launch;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import view.VistaPrincipalController;
+import model.Producto;
+import view.VistaTabsController;
 
 /**
  *
- * @author dam
+ * @author vntnc
  */
-public class SportMania extends Application {
+public class Inventario extends Application {
 
-  private ObservableList productos = FXCollections.observableArrayList();
+    private ObservableList productos = FXCollections.observableArrayList();
 
     private Stage escenarioPrincipal;
     private BorderPane layoutPrincipal;
     private BorderPane vistaTabs;
 
-    public SportMania() {
+    public Inventario() {
 
         // imagenes de los productos
         ImageView imagen = new ImageView(getClass().getResource("../img/tabs/sun.png").toExternalForm());
@@ -169,4 +165,5 @@ public class SportMania extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
 }
