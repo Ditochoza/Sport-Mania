@@ -20,7 +20,7 @@ import model.Producto;
 /**
  * FXML Controller class
  *
- * @author vntnc
+ * @author CarlosLuisMiguelValentinVictor
  */
 // Este controlador es el intermediario entre todos los tabs (Producto, Informacion, Estadisticas) que a su vez tienen sus propios controladores
 public class VistaTabsController implements Initializable {

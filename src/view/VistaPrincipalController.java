@@ -15,7 +15,7 @@ import javafx.scene.control.MenuBar;
 /**
  * FXML Controller class
  *
- * @author vntnc
+ * @author CarlosLuisMiguelValentinVictor
  */
 public class VistaPrincipalController implements Initializable {
 

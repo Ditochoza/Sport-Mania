@@ -27,7 +27,7 @@ import model.Producto;
 /**
  * FXML Controller class
  *
- * @author vntnc
+ * @author CarlosLuisMiguelValentinVictor
  */
 public class VistaInformacionTabController implements Initializable {
 

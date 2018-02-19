@@ -22,7 +22,7 @@ import view.VistaTabsController;
 
 /**
  *
- * @author vntnc
+ * @author CarlosLuisMiguelValentinVictor
  */
 public class Inventario extends Application {
 

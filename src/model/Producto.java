@@ -23,7 +23,7 @@ import javafx.scene.image.ImageView;
 
 /**
  *
- * @author vntnc
+ * @author CarlosLuisMiguelValentinVictor
  */
 public class Producto {
 

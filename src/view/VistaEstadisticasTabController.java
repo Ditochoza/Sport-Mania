@@ -12,7 +12,7 @@ import javafx.fxml.Initializable;
 /**
  * FXML Controller class
  *
- * @author vntnc
+ * @author CarlosLuisMiguelValentinVictor
  */
 public class VistaEstadisticasTabController implements Initializable {
 
