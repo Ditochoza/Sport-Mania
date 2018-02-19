@@ -5,19 +5,28 @@
  */
 package controller;
 
+import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Producto;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import view.VistaTabsController;
 
 /**
@@ -35,27 +44,52 @@ public class Inventario extends Application {
     public Inventario() {
 
         // imagenes de los productos
-        ImageView imagen = new ImageView(getClass().getResource("../img/tabs/sun.png").toExternalForm());
+        ImageView imagen = new ImageView(getClass().getResource("../img/tabs/gafasbuceo.jpg").toExternalForm());
         imagen.setFitHeight(50);
         imagen.setPreserveRatio(true);
         imagen.setFitWidth(50);
 
-        ImageView imagen2 = new ImageView(getClass().getResource("../img/tabs/sun.png").toExternalForm());
+        ImageView imagen2 = new ImageView(getClass().getResource("../img/tabs/aletasbuceo.jpg").toExternalForm());
         imagen2.setFitHeight(50);
         imagen2.setFitWidth(50);
         imagen2.setPreserveRatio(true);
 
-        ImageView imagen3 = new ImageView(getClass().getResource("../img/tabs/sun.png").toExternalForm());
+        ImageView imagen3 = new ImageView(getClass().getResource("../img/tabs/gorrocompeticion.jpg").toExternalForm());
         imagen3.setFitHeight(50);
         imagen3.setFitWidth(50);
         imagen2.setPreserveRatio(true);
 
-        ImageView imagen4 = new ImageView(getClass().getResource("../img/tabs/sun.png").toExternalForm());
+        ImageView imagen4 = new ImageView(getClass().getResource("../img/tabs/banadorcompeticion.jpg").toExternalForm());
         imagen4.setFitHeight(50);
         imagen4.setFitWidth(50);
         imagen4.setPreserveRatio(true);
 
-        ImageView imagen5 = new ImageView(getClass().getResource("../img/tabs/sun.png").toExternalForm());
+        ImageView imagen5 = new ImageView(getClass().getResource("../img/tabs/manoplasnatacion.png").toExternalForm());
+        imagen5.setFitHeight(50);
+        imagen5.setFitWidth(50);
+        imagen5.setPreserveRatio(true);
+        
+        ImageView imagen6 = new ImageView(getClass().getResource("../img/tabs/botasfutbol2.jpg").toExternalForm());
+        imagen.setFitHeight(50);
+        imagen.setPreserveRatio(true);
+        imagen.setFitWidth(50);
+
+        ImageView imagen7 = new ImageView(getClass().getResource("../img/tabs/pantalonescortosfutbol.jpg").toExternalForm());
+        imagen2.setFitHeight(50);
+        imagen2.setFitWidth(50);
+        imagen2.setPreserveRatio(true);
+
+        ImageView imagen8 = new ImageView(getClass().getResource("../img/tabs/camisetatecnicafutbol.jpg").toExternalForm());
+        imagen3.setFitHeight(50);
+        imagen3.setFitWidth(50);
+        imagen2.setPreserveRatio(true);
+
+        ImageView imagen9 = new ImageView(getClass().getResource("../img/tabs/tobillerafutbol.gif").toExternalForm());
+        imagen4.setFitHeight(50);
+        imagen4.setFitWidth(50);
+        imagen4.setPreserveRatio(true);
+
+        ImageView imagen10 = new ImageView(getClass().getResource("../img/tabs/mediastallaLfutbol.jpg").toExternalForm());
         imagen5.setFitHeight(50);
         imagen5.setFitWidth(50);
         imagen5.setPreserveRatio(true);
@@ -68,11 +102,11 @@ public class Inventario extends Application {
         productos.add(new Producto("NA514", "Manoplas", 567, 5.59, imagen5, "Guantes para impulsarse a gran velocidad en el agua."));
         
         // futbol
-        productos.add(new Producto("FU867", "Botas de fútbol", 345, 39.99, imagen, "Botas profesionales baratas y de gran calidad."));
-        productos.add(new Producto("FU958", "Pantalones cortos", 875, 10.59, imagen2, "Pantalones tamaño M para fútbol. Calidad algodon 100%"));
-        productos.add(new Producto("FU774", "Camiseta", 156, 21.99, imagen3, "Camiseta técnica"));
-        productos.add(new Producto("FU452", "Protectores", 98, 39.99, imagen4, "Tobilleras protectoras en caso de accidentes en el terreno de juego"));
-        productos.add(new Producto("FU882", "Medias", 443, 13.29, imagen5, "Medias talla L enfocadas al fútbol"));
+        productos.add(new Producto("FU867", "Botas de fútbol", 345, 39.99, imagen6, "Botas profesionales baratas y de gran calidad."));
+        productos.add(new Producto("FU958", "Pantalones cortos", 875, 10.59, imagen7, "Pantalones tamaño M para fútbol. Calidad algodon 100%"));
+        productos.add(new Producto("FU774", "Camiseta", 156, 21.99, imagen8, "Camiseta técnica"));
+        productos.add(new Producto("FU452", "Protectores", 98, 39.99, imagen9, "Tobilleras protectoras en caso de accidentes en el terreno de juego"));
+        productos.add(new Producto("FU882", "Medias", 443, 13.29, imagen10, "Medias talla L enfocadas al fútbol"));
         
         // tenis
         productos.add(new Producto("TE456", "Raqueta", 665, 59.99, imagen, "Raqueta réplica de Rafael Nadal. Muy buen rendimiento y cordaje fuerte"));
@@ -157,7 +191,7 @@ public class Inventario extends Application {
     public ObservableList getProductos() {
         return productos;
     }
-
+    
     public Stage getPrimaryStage() {
         return escenarioPrincipal;
     }

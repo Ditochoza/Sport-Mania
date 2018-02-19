@@ -9,17 +9,15 @@
    <top>
       <MenuBar>
         <menus>
-          <Menu mnemonicParsing="false" text="Archivo">
+          <Menu mnemonicParsing="false" text="Menú">
             <items>
-              <MenuItem mnemonicParsing="false" text="Nuevo" />
-                  <MenuItem mnemonicParsing="false" text="Abrir" />
-                  <MenuItem mnemonicParsing="false" text="Guardar" />
-                  <MenuItem mnemonicParsing="false" text="Guardar como" />
+              <MenuItem mnemonicParsing="false" onAction="#pdf" text="Descargar Guía PDF" />
+                  <MenuItem mnemonicParsing="false" onAction="#salir" text="Salir" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="About">
             <items>
-              <MenuItem mnemonicParsing="false" text="Acerca de" />
+              <MenuItem mnemonicParsing="false" onAction="#acercaDe" text="Acerca de" />
             </items>
           </Menu>
         </menus>
