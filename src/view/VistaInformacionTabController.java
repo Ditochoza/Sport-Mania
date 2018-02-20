@@ -8,10 +8,15 @@ package view;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -22,7 +27,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javax.imageio.ImageIO;
 import model.Producto;
+import net.sourceforge.jbarcodebean.JBarcodeBean;
+import net.sourceforge.jbarcodebean.model.Interleaved25;
 
 /**
  * FXML Controller class
@@ -256,9 +264,25 @@ public class VistaInformacionTabController implements Initializable {
                 dialogAlert.getStylesheets().add(VistaInformacionTabController.this.getClass().getResource("../css/modena_dark.css").toExternalForm());
                 alert.showAndWait();
             } else {
-                /*
-                Creación de códigos de barras
-                 */
+                int numCodigos = Integer.parseInt((String) comboBoxCodigosBarras.getValue());
+                for (int i = 0; i < numCodigos; i++) {
+                    try {
+                        String numeroCodigo = (filaSeleccionadaProducto.getCodigo()).substring(2);
+                        for (int j = 0; j < 10; j++) {
+                            numeroCodigo += 0 + (int)(Math.random() * ((9 - 0) + 1));
+                        }
+                        
+                        JBarcodeBean barcode = new JBarcodeBean();
+                        barcode.setCodeType(new Interleaved25());
+                        barcode.setCode(numeroCodigo);
+                        barcode.setCheckDigit(true);
+                        
+                        BufferedImage bufferedImage = barcode.draw(new BufferedImage(400, 400, BufferedImage.TYPE_INT_RGB));
+                        File file = new File("imagenesCodigosBarras/codebar" + filaSeleccionadaProducto.getCodigo() + "_" + (i+1) + ".png");
+                        ImageIO.write(bufferedImage, "png", file);
+                    } catch (IOException ex) {}
+                    
+                }
             }
         });
     }
