@@ -23,9 +23,9 @@
                 <MenuItem mnemonicParsing="false" text="Descargar Guía PDF" />
               </items>
             </Menu>
-          <Menu mnemonicParsing="false" text="Acerca de ">
+          <Menu mnemonicParsing="false" text="Ayuda">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#acercaDe" text="Mostrar" />
+              <MenuItem mnemonicParsing="false" onAction="#acercaDe" text="Acerca de" />
             </items>
           </Menu>
         </menus>
