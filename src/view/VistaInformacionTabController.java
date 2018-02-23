@@ -32,6 +32,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
 import javax.imageio.ImageIO;
 import model.JpgToPdf;
 import model.Producto;
@@ -271,28 +274,47 @@ public class VistaInformacionTabController implements Initializable {
                 alert.showAndWait();
             } else {
                 int numCodigos = Integer.parseInt((String) comboBoxCodigosBarras.getValue());
-                for (int i = 0; i < numCodigos; i++) {
-                    try {
-                        String numeroCodigo = (filaSeleccionadaProducto.getCodigo()).substring(2);
-                        for (int j = 0; j < 10; j++) {
-                            numeroCodigo += 0 + (int)(Math.random() * ((9 - 0) + 1));
+
+                DirectoryChooser chooser = new DirectoryChooser();
+                chooser.setTitle("JavaFX Projects");
+                File defaultDirectory = new File("C:/");
+                chooser.setInitialDirectory(defaultDirectory);
+                File selectedDirectory = chooser.showDialog(null);
+
+                if (selectedDirectory != null && selectedDirectory.isDirectory()) {
+                    File carpetaImagenesCodigosBarras = new File("ImagenesCodigosBarras/" + numCodigos + "CodigosBarras_" + new SimpleDateFormat("ddMMyyyHHmmssSS").format(Calendar.getInstance().getTime()));
+                    carpetaImagenesCodigosBarras.mkdirs();
+                    for (int i = 0; i < numCodigos; i++) {
+                        try {
+
+                            String numeroCodigo = (filaSeleccionadaProducto.getCodigo()).substring(2);
+                            for (int j = 0; j < 10; j++) {
+                                numeroCodigo += 0 + (int) (Math.random() * ((9 - 0) + 1));
+                            }
+
+                            JBarcodeBean barcode = new JBarcodeBean();
+                            barcode.setCodeType(new Interleaved25());
+                            barcode.setCode(numeroCodigo);
+                            barcode.setCheckDigit(true);
+
+                            BufferedImage bufferedImage = barcode.draw(new BufferedImage(400, 400, BufferedImage.TYPE_INT_RGB));
+                            File file = new File(carpetaImagenesCodigosBarras.getPath() + "/" + filaSeleccionadaProducto.getCodigo() + "_" + (i + 1) + ".jpg");
+                            ImageIO.write(bufferedImage, "jpg", file);
+
+                        } catch (IOException ex) {
                         }
-                        
-                        JBarcodeBean barcode = new JBarcodeBean();
-                        barcode.setCodeType(new Interleaved25());
-                        barcode.setCode(numeroCodigo);
-                        barcode.setCheckDigit(true);
-                        
-                        BufferedImage bufferedImage = barcode.draw(new BufferedImage(400, 400, BufferedImage.TYPE_INT_RGB));
-                        File file = new File("imagenesCodigosBarras/codebar" + filaSeleccionadaProducto.getCodigo() + "_" + (i+1) + ".jpg");
-                        ImageIO.write(bufferedImage, "jpg", file);
-                        
-                    } catch (IOException ex) {}
-                    
+
+                    }
+                    try {
+                        JpgToPdf.jpgToPdf(carpetaImagenesCodigosBarras, selectedDirectory,
+                                filaSeleccionadaProducto.getCodigo(), getRutaAbsoluta(filaSeleccionadaProducto.getRutaFoto()),
+                                filaSeleccionadaProducto.getNombre(), filaSeleccionadaProducto.getDescripcion(),
+                                filaSeleccionadaProducto.getCategoria(), filaSeleccionadaProducto.getPrecio());
+                    } catch (DocumentException ex) {
+                    } catch (IOException ex) {
+                    }
                 }
-                try {
-                    JpgToPdf.jpgToPdf(getRutaAbsoluta(filaSeleccionadaProducto.getRutaFoto()), filaSeleccionadaProducto.getNombre(), filaSeleccionadaProducto.getDescripcion(), filaSeleccionadaProducto.getCategoria(), filaSeleccionadaProducto.getPrecio());
-                } catch (DocumentException ex) {} catch (IOException ex) {}
+
             }
         });
     }

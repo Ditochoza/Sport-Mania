@@ -20,24 +20,25 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class JpgToPdf {
 
 
-    public static void jpgToPdf(String rutaAbsoluta, String nombre, String descripcion, String categoria, Double precio) throws FileNotFoundException, DocumentException, BadElementException, IOException {
-        File root = new File("imagenesCodigosBarras");
-        String outputFile = "output.pdf";
+    public static void jpgToPdf(File carpetaImagenesCodigosBarras, File selectedDirectory, String codigo, String rutaAbsoluta, String nombre, String descripcion, String categoria, Double precio) throws FileNotFoundException, DocumentException, BadElementException, IOException {
+        String outputFile = "CodigosBarras_" + codigo + "_" + new SimpleDateFormat("ddMMyyyHHmmssSS").format(Calendar.getInstance().getTime()) + ".pdf";
         List<String> files = new ArrayList<String>();
-        for (final File fileEntry : root.listFiles()) {
+        for (final File fileEntry : carpetaImagenesCodigosBarras.listFiles()) {
             if (fileEntry.getName().contains("jpg")) {
                 files.add(fileEntry.getName());
             }
         }
 
         Document document = new Document();
-        PdfWriter.getInstance(document, new FileOutputStream(new File(root, outputFile)));
+        PdfWriter.getInstance(document, new FileOutputStream(new File(selectedDirectory, outputFile)));
         document.open();
         
         document.newPage();
@@ -53,15 +54,12 @@ public class JpgToPdf {
         s.setIndentationLeft(35);
         document.add(s);
         s = new Paragraph("Descripción: " + descripcion);
-        //s.setSpacingBefore(200);
         s.setIndentationLeft(35);
         document.add(s);
         s = new Paragraph("Categoría: " + categoria);
-        //s.setSpacingBefore(250);
         s.setIndentationLeft(35);
         document.add(s);
         s = new Paragraph("Precio: " + precio + "€");
-        //s.setSpacingBefore(300);
         s.setIndentationLeft(35);
         document.add(s);
         
@@ -69,7 +67,7 @@ public class JpgToPdf {
         int x = 0;
         int y = 650;
         for (String f : files) {
-            Image imagenCodigoBarras = Image.getInstance(new File(root, f).getAbsolutePath());
+            Image imagenCodigoBarras = Image.getInstance(new File(carpetaImagenesCodigosBarras, f).getAbsolutePath());
             imagenCodigoBarras.setAbsolutePosition(x, y);
             imagenCodigoBarras.setBorderWidth(0);
             imagenCodigoBarras.scaleAbsolute(200, 200);
