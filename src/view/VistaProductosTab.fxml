@@ -47,11 +47,7 @@
                 <Button fx:id="editar" mnemonicParsing="false" prefHeight="20.0" prefWidth="80.0" text="Editar" />
                 <Button fx:id="borrar" mnemonicParsing="false" prefHeight="20.0" prefWidth="80.0" text="Borrar" />
                 <Pane HBox.hgrow="ALWAYS" />
-                <AnchorPane style="-fx-background-color: white; -fx-border-radius: 20;">
-                    <children>
-                        <JFXComboBox id="comboBoxCategoria" fx:id="categoria" focusColor="#f0f000" promptText="Categoría" unFocusColor="WHITE" />
-                    </children>
-                </AnchorPane>
+                  <JFXComboBox id="comboBoxCategoria" fx:id="categoria" focusColor="#f0f000" promptText="Categoría" unFocusColor="WHITE" />
                 <Button fx:id="detalles" mnemonicParsing="false" prefHeight="20.0" prefWidth="95.0" text="Ir a detalles">
                     <HBox.margin>
                         <Insets />

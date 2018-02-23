@@ -5,13 +5,18 @@
  */
 package view;
 
+import com.itextpdf.text.DocumentException;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import static java.lang.Thread.sleep;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.ResourceBundle;
@@ -28,6 +33,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javax.imageio.ImageIO;
+import model.JpgToPdf;
 import model.Producto;
 import net.sourceforge.jbarcodebean.JBarcodeBean;
 import net.sourceforge.jbarcodebean.model.Interleaved25;
@@ -278,11 +284,15 @@ public class VistaInformacionTabController implements Initializable {
                         barcode.setCheckDigit(true);
                         
                         BufferedImage bufferedImage = barcode.draw(new BufferedImage(400, 400, BufferedImage.TYPE_INT_RGB));
-                        File file = new File("imagenesCodigosBarras/codebar" + filaSeleccionadaProducto.getCodigo() + "_" + (i+1) + ".png");
-                        ImageIO.write(bufferedImage, "png", file);
+                        File file = new File("imagenesCodigosBarras/codebar" + filaSeleccionadaProducto.getCodigo() + "_" + (i+1) + ".jpg");
+                        ImageIO.write(bufferedImage, "jpg", file);
+                        
                     } catch (IOException ex) {}
                     
                 }
+                try {
+                    JpgToPdf.jpgToPdf(getRutaAbsoluta(filaSeleccionadaProducto.getRutaFoto()), filaSeleccionadaProducto.getNombre(), filaSeleccionadaProducto.getDescripcion(), filaSeleccionadaProducto.getCategoria(), filaSeleccionadaProducto.getPrecio());
+                } catch (DocumentException ex) {} catch (IOException ex) {}
             }
         });
     }
@@ -340,6 +350,14 @@ public class VistaInformacionTabController implements Initializable {
         editar.setVisible(!mode);
         cancelar.setVisible(mode);
         guardar.setVisible(mode);
+    }
+
+    private String getRutaAbsoluta(String rutaFoto) {
+        File f = new File(rutaFoto);
+        Path currentRelativePath = Paths.get("");
+        String s = currentRelativePath.toAbsolutePath().toString();
+        s += "\\src\\img\\products\\" + f.getName();
+        return s;
     }
 
 }

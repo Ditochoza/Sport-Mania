@@ -10,8 +10,14 @@ import controller.Inventario;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -40,9 +46,11 @@ public class VistaProductosTabController implements Initializable {
 
     private Inventario inventario;
 
+    private FilteredList<Producto> filteredData;
+
     // tabla
     @FXML
-    private TableView tablaProductos;
+    private TableView<Producto> tablaProductos;
     @FXML
     private TableColumn<Producto, String> codigoColumn;
     @FXML
@@ -85,10 +93,7 @@ public class VistaProductosTabController implements Initializable {
         precioColumn.setCellValueFactory(cellData -> cellData.getValue().preciosProperty());
         fechaAlta.setCellValueFactory(cellData -> cellData.getValue().fechaAltaProperty());
         imagenProducto.setCellValueFactory(cellData -> cellData.getValue().fotoProperty());
-
-        /*for (int i = 0; i < ; i++) {
-            comboBoxCodigosBarras.getItems().add(i + 1);
-        }*/
+                
         listeners();
 
     }
@@ -154,7 +159,11 @@ public class VistaProductosTabController implements Initializable {
                 if (filaSeleccionada.getCodigo().equals(tabsControler.getCodigoInformacionProducto())) {
                     tabsControler.desactivarTabs();
                 }
-                tablaProductos.getItems().remove(tablaProductos.getSelectionModel().getSelectedIndex());
+                
+                Producto selectedItem = tablaProductos.getSelectionModel().getSelectedItem();
+                if (selectedItem != null) {
+                    inventario.getProductos().remove(selectedItem);
+                }
             }
 
         });
@@ -174,6 +183,29 @@ public class VistaProductosTabController implements Initializable {
         //Añado la lista obervable a la tabla
         tablaProductos.setItems(this.inventario.getProductos());
 
+        filteredData = new FilteredList<>(inventario.getProductos());
+
+        categoria.setOnAction((t) -> {
+            
+            //Se hace scroll hasta arriba para evitar errores
+            tablaProductos.scrollTo(0);
+            
+            String categoriaElegida = categoria.getValue().toString();
+            filteredData.setPredicate(product -> {
+                if (categoriaElegida == null || categoriaElegida.isEmpty() || categoriaElegida.toLowerCase().equals("todas")) {
+                    return true;
+                }
+
+                if (product.getCategoria().toLowerCase().contains(categoriaElegida.toLowerCase())) {
+                    return true;
+                } 
+                return false;
+            });
+        });
+        SortedList<Producto> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(tablaProductos.comparatorProperty());
+        tablaProductos.setItems(sortedData);
+        
         rellenarComboBox();
 
     }
@@ -183,7 +215,7 @@ public class VistaProductosTabController implements Initializable {
     }
 
     public void eliminarProductoTabla(Producto filaSeleccionadaProducto) {
-        tablaProductos.getItems().remove(filaSeleccionadaProducto);
+        inventario.getProductos().remove(filaSeleccionadaProducto);
     }
 
     public void actualizarTabla() {
@@ -191,18 +223,19 @@ public class VistaProductosTabController implements Initializable {
     }
 
     private void rellenarComboBox() {
-        ArrayList<Producto> la = new ArrayList<>(inventario.getProductos());
+        ArrayList<Producto> productos = new ArrayList<>(inventario.getProductos());
         ArrayList<String> categorias = new ArrayList<>();
 
-        for (int i = 0; i < la.size(); i++) {
+        categorias.add("Todas");
+        for (int i = 0; i < productos.size(); i++) {
             boolean repetido = false;
             for (int j = 0; j < categorias.size(); j++) {
-                if (categorias.get(j).equals(la.get(i).getCategoria())) {
+                if (categorias.get(j).equals(productos.get(i).getCategoria())) {
                     repetido = true;
                 }
             }
             if (!repetido) {
-                categorias.add(la.get(i).getCategoria());
+                categorias.add(productos.get(i).getCategoria());
             }
         }
 

@@ -26,7 +26,8 @@ import view.VistaTabsController;
  */
 public class Inventario extends Application {
 
-    private ObservableList productos = FXCollections.observableArrayList();
+    private ObservableList<Producto> productos = FXCollections.observableArrayList();
+    
 
     private Stage escenarioPrincipal;
     private BorderPane layoutPrincipal;

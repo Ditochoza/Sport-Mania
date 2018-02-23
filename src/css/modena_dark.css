@@ -198,3 +198,13 @@
     -fx-background-color:-fx-primary;
     -fx-padding: 0.25;
 }
+
+
+/** comboBox estilos **/
+#comboBoxCategoria{
+    -fx-prompt-text-fill: white;
+}
+
+#comboBoxCategoria> .list-cell {
+    -fx-text-fill: white;
+}
