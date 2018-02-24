@@ -11,10 +11,10 @@
         <menus>
           <Menu mnemonicParsing="false" text="Archivo">
             <items>
-              <MenuItem mnemonicParsing="false" text="Nuevo" />
-                  <MenuItem mnemonicParsing="false" text="Abrir" />
-                  <MenuItem mnemonicParsing="false" text="Guardar" />
-                  <MenuItem mnemonicParsing="false" text="Guardar como" />
+              <MenuItem mnemonicParsing="false" onAction="#nuevo" text="Nuevo" />
+                  <MenuItem mnemonicParsing="false" onAction="#abrir" text="Abrir" />
+                  <MenuItem mnemonicParsing="false" onAction="#guardar" text="Guardar" />
+                  <MenuItem mnemonicParsing="false" onAction="#guardarComo" text="Guardar como" />
                   <MenuItem mnemonicParsing="false" onAction="#salir" text="Salir" />
             </items>
           </Menu>

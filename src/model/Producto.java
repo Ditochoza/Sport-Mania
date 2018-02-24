@@ -16,11 +16,13 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.image.ImageView;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author CarlosLuisMiguelValentinVictor
  */
+
 public class Producto {
 
     private StringProperty codigo;
@@ -32,12 +34,12 @@ public class Producto {
     private ObjectProperty foto;
     private StringProperty rutaFoto;
     private StringProperty descripcion;
-    private StringProperty codigoBarras;
     private StringProperty fechaAlta;
     private StringProperty fechaModificacion;
 
     public Producto() {
-        this(null, null, null, null, null, null, null, null);
+        //no alterar o el xml fallará al cargarse
+        this(null, null, null, 0, 0.0, null, null, null);
     }
 
     public Producto(String codigo, String nombre, String categoria, Integer stock, Double precios,
@@ -95,18 +97,6 @@ public class Producto {
         return descripcion;
     }
 
-    // codigo barras
-    public String getcodigoBarras() {
-        return this.codigoBarras.get();
-    }
-
-    public void setcodigoBarras(String codigoBarras) {
-        this.codigoBarras.set(codigoBarras);
-    }
-
-    public StringProperty codigoBarrasProperty() {
-        return codigoBarras;
-    }
 
     //fecha alta
     public String getFechaAlta() {
