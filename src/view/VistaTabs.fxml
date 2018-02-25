@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.VistaTabsController">
+    <center>
+        <TabPane fx:id="Tabs" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+            <tabs>
+                <Tab fx:id="productosTab" closable="false" text="  Productos">
+                    <fx:include fx:id="productos" source="../view/VistaProductosTab.fxml" />
+                    <graphic>
+                        <ImageView fx:id="productosIcon" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../img/tabs/products.png" />
+                            </image>
+                            <viewport>
+                                <Rectangle2D />
+                            </viewport>
+                        </ImageView>
+                    </graphic>
+                </Tab>
+                <Tab fx:id="informacionTab" closable="false" text="  Información">
+                    <fx:include fx:id="informacion" source="../view/VistaInformacionTab.fxml" />
+                    <graphic>
+                        <ImageView fx:id="informacionIcon" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../img/tabs/informacion.png" />
+                            </image>
+                            <viewport>
+                                <Rectangle2D />
+                            </viewport>
+                        </ImageView>
+                    </graphic>
+                </Tab>
+                <Tab fx:id="estadisticasTab" text="  Estadísticas">
+                    <fx:include fx:id="estadisticas" source="../view/VistaEstadisticasTab.fxml" />
+
+                    <graphic>
+                        <ImageView fx:id="estadisticasIcon" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../img/tabs/stats.png" />
+                            </image>
+                            <viewport>
+                                <Rectangle2D />
+                            </viewport>
+                        </ImageView>
+                    </graphic>
+                </Tab>
+            </tabs>
+            <opaqueInsets>
+                <Insets />
+            </opaqueInsets>
+        </TabPane>
+    </center>
+    <padding>
+        <Insets top="10.0" />
+    </padding>
+</BorderPane>
