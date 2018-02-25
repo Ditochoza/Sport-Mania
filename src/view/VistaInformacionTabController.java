@@ -12,17 +12,16 @@ import com.jfoenix.controls.JFXTextField;
 import controller.Inventario;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import static java.lang.Thread.sleep;
 import java.net.URL;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -35,7 +34,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
-import javafx.stage.Window;
 import javax.imageio.ImageIO;
 import model.PDFHelper;
 import model.Producto;
@@ -53,7 +51,11 @@ public class VistaInformacionTabController implements Initializable {
     private VistaTabsController tabsController;
     private Inventario inventario;
 
+    public String isAddOrEdit = "";
+    private File imagenElegida;
+
     // datos antes de la edición
+    private String idOld;
     private String rutaOld;
     private String nombreOld;
     private String precioOld;
@@ -62,6 +64,8 @@ public class VistaInformacionTabController implements Initializable {
     private String stockOld;
 
     // datos
+    @FXML
+    private JFXTextField idProducto;
     @FXML
     private JFXTextField nombreProducto;
     @FXML
@@ -89,6 +93,8 @@ public class VistaInformacionTabController implements Initializable {
     @FXML
     Button cancelar;
     @FXML
+    Button addImagen;
+    @FXML
     Button guardar;
     @FXML
     JFXButton crear;
@@ -101,8 +107,8 @@ public class VistaInformacionTabController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         listeners();
     }
-    
-    public void setInventario(Inventario inventario){
+
+    public void setInventario(Inventario inventario) {
         this.inventario = inventario;
         System.out.println("Inventario recibido " + inventario);
 
@@ -112,26 +118,34 @@ public class VistaInformacionTabController implements Initializable {
         this.tabsController = tabsController;
     }
 
+    //Es llamado por la apliación principal para tener una referencia de vuelta de si mismo
+    public void setInventarioTabInformacion(Inventario inventario) {
+        this.inventario = inventario;
+    }
+
     // recibo la fila seleccionada de VistaTabController que a su vez lo ha recibido de VistaProductosTabController
     public void setFilaInformacion(Producto newValue) {
-        this.filaSeleccionadaProducto = newValue;
-        System.out.println(filaSeleccionadaProducto.getCodigo());
+        if (!isAddOrEdit.equals("Add")) {
+            this.filaSeleccionadaProducto = newValue;
+            System.out.println(filaSeleccionadaProducto.getCodigo());
 
-        imagenProducto.setImage(new Image(getClass().getResource(filaSeleccionadaProducto.getRutaFoto()).toExternalForm()));
-        nombreProducto.setText(filaSeleccionadaProducto.getNombre());
-        precioProducto.setText(String.valueOf(filaSeleccionadaProducto.getPrecio()));
-        descripcionProducto.setText(filaSeleccionadaProducto.getDescripcion());
-        categoriaProducto.setText(filaSeleccionadaProducto.getCategoria());
-        stockProducto.setText(String.valueOf(filaSeleccionadaProducto.getStock()));
-        fechaAltaProducto.setText(String.valueOf(filaSeleccionadaProducto.getFechaAlta()));
-        fechaModificacionProducto.setText(String.valueOf(filaSeleccionadaProducto.getFechaModificacion()));
-        
-        int numeroCodigosBarras = 100;
-        if (filaSeleccionadaProducto.getStock() < numeroCodigosBarras) {
-            numeroCodigosBarras = filaSeleccionadaProducto.getStock();
-        }
-        for (int i = 0; i < numeroCodigosBarras; i++) {
-            comboBoxCodigosBarras.getItems().add(i + 1);
+            imagenProducto.setImage(new Image(getClass().getResource(filaSeleccionadaProducto.getRutaFoto()).toExternalForm()));
+            idProducto.setText(filaSeleccionadaProducto.getCodigo());
+            nombreProducto.setText(filaSeleccionadaProducto.getNombre());
+            precioProducto.setText(String.valueOf(filaSeleccionadaProducto.getPrecio()));
+            descripcionProducto.setText(filaSeleccionadaProducto.getDescripcion());
+            categoriaProducto.setText(filaSeleccionadaProducto.getCategoria());
+            stockProducto.setText(String.valueOf(filaSeleccionadaProducto.getStock()));
+            fechaAltaProducto.setText(String.valueOf(filaSeleccionadaProducto.getFechaAlta()));
+            fechaModificacionProducto.setText(String.valueOf(filaSeleccionadaProducto.getFechaModificacion()));
+
+            int numeroCodigosBarras = 100;
+            if (filaSeleccionadaProducto.getStock() < numeroCodigosBarras) {
+                numeroCodigosBarras = filaSeleccionadaProducto.getStock();
+            }
+            for (int i = 0; i < numeroCodigosBarras; i++) {
+                comboBoxCodigosBarras.getItems().add(i + 1);
+            }
         }
     }
 
@@ -158,30 +172,106 @@ public class VistaInformacionTabController implements Initializable {
         });
 
         editar.setOnMouseClicked(e -> {
-            modoEditar(true);
+            isAddOrEdit = "Edit";
+            modoEditAdd(true);
+        });
+
+        anadir.setOnMouseClicked(e -> {
+            isAddOrEdit = "Add";
+            modoEditAdd(true);
+        });
+
+        addImagen.setOnMouseClicked(e -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Seleccione una imagen");
+
+            //Filtro para la extensión
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+                    "JPG files (*.jpg)", "*.jpg");
+            fileChooser.getExtensionFilters().add(extFilter);
+
+            //Muestro el diálogo de guardar
+            imagenElegida = fileChooser.showOpenDialog(inventario.getPrimaryStage());
+
+            if (imagenElegida != null) {
+                try {
+                    System.out.println(imagenElegida);
+                    Files.copy(imagenElegida.toPath(), (new File(getRutaAbsoluta(imagenElegida.getAbsolutePath()))).toPath(), REPLACE_EXISTING);
+                } catch (IOException ex) {
+                    System.out.println(ex);
+                }
+            }
         });
 
         cancelar.setOnMouseClicked(e -> {
-            imagenProducto.setImage(new Image(getClass().getResource(rutaOld).toExternalForm()));
-            nombreProducto.setText(nombreOld);
-            precioProducto.setText(precioOld);
-            descripcionProducto.setText(descripcionOld);
-            categoriaProducto.setText(categoriaOld);
-            stockProducto.setText(stockOld);
+            if (isAddOrEdit.equals("Add")) {
+                tabsController.setTabProductos();
+                tabsController.desactivarTabs();
+            } else {
+                imagenProducto.setImage(new Image(getClass().getResource(rutaOld).toExternalForm()));
+                idProducto.setText(idOld);
+                nombreProducto.setText(nombreOld);
+                precioProducto.setText(precioOld);
+                descripcionProducto.setText(descripcionOld);
+                categoriaProducto.setText(categoriaOld);
+                stockProducto.setText(stockOld);
+            }
 
-            modoEditar(false);
+            isAddOrEdit = "";
+            modoEditAdd(false);
         });
 
         guardar.setOnMouseClicked((MouseEvent e) -> {
             System.out.println("Guardar");
             String erroresString = "";
 
+            // errores imagen
+            if (imagenElegida == null) {
+                erroresString += " - No se ha elegido ninguna imagen\n";
+            }
+
+            // errores id
+            ArrayList<Producto> productos = new ArrayList<>(inventario.getProductos());
+            if (idProducto.getText().isEmpty()) {
+                erroresString += " - El ID no puede quedar vacío\n";
+                idProducto.setUnFocusColor(Color.RED);
+            } else {
+                if (isAddOrEdit.equals("Add")) {
+                    boolean repetido = false;
+                    for (int i = 0; i < productos.size(); i++) {
+                        if (productos.get(i).getCodigo().equals(idProducto.getText())) {
+                            repetido = true;
+                        }
+                    }
+                    if (repetido) {
+                        erroresString += " - El ID debe ser único\n";
+                        idProducto.setUnFocusColor(Color.RED);
+                    } else {
+                        if (idProducto.getText().length() != 7) {
+                            erroresString += " - El ID debe ser de 7 caracteres\n";
+                            idProducto.setUnFocusColor(Color.RED);
+                        } else {
+                            System.out.println(idProducto.getText().substring(0, 2) + " " + idProducto.getText().substring(2));
+                            System.out.println(idProducto.getText().substring(0, 2).matches(".*[a-zA-Z].*"));
+                            System.out.println(idProducto.getText().substring(2).matches(".*[0-9].*"));
+                            if (idProducto.getText().substring(0, 2).matches(".*[a-zA-Z].*") && idProducto.getText().substring(2).matches(".*[0-9].*")) {
+                                idProducto.setUnFocusColor(Color.rgb(42, 46, 55));
+                            } else {
+                                erroresString += " - El ID debe contener 2 letras y 5 números\n";
+                                idProducto.setUnFocusColor(Color.RED);
+                            }
+                        }
+                    }
+                } else {
+                    nombreProducto.setUnFocusColor(Color.rgb(42, 46, 55));
+                }
+
+            }
+
             // errores nombre producto
             if (nombreProducto.getText().isEmpty()) {
                 erroresString += " - El nombre no puede quedar vacío\n";
                 nombreProducto.setUnFocusColor(Color.RED);
-            } else {
-                nombreProducto.setUnFocusColor(Color.rgb(42, 46, 55));
             }
 
             // errores precio producto
@@ -236,18 +326,29 @@ public class VistaInformacionTabController implements Initializable {
                 dialogAlert.getStylesheets().add(VistaInformacionTabController.this.getClass().getResource("../css/modena_dark.css").toExternalForm());
                 alert.showAndWait();
             } else {
-                System.out.println("Sin errores. Guardando...");
-                filaSeleccionadaProducto.setNombre(nombreProducto.getText());
-                filaSeleccionadaProducto.setPrecio(Double.valueOf(precioProducto.getText()));
-                filaSeleccionadaProducto.setDescripcion(descripcionProducto.getText());
-                filaSeleccionadaProducto.setCategoria(categoriaProducto.getText());
-                filaSeleccionadaProducto.setStock(Integer.valueOf(stockProducto.getText()));
-                filaSeleccionadaProducto.setFechaModificacion(new SimpleDateFormat("dd/MM/yyy HH:mm").format(Calendar.getInstance().getTime()));
+                if (isAddOrEdit.equals("Add")) {
+                    inventario.getProductos().add(new Producto(idProducto.getText(), nombreProducto.getText(), categoriaProducto.getText(), Integer.parseInt(stockProducto.getText()), Double.parseDouble(precioProducto.getText()), inventario.crearImagenAlAnadirProducto(imagenElegida.getName()), descripcionProducto.getText(), "../img/products/" + imagenElegida.getName()));
 
-                fechaModificacionProducto.setText(String.valueOf(filaSeleccionadaProducto.getFechaModificacion()));
+                    isAddOrEdit = "";
+                    modoEditAdd(false);
+                    tabsController.actualizarTabla();
+                    tabsController.desactivarTabs();
+                    tabsController.setTabProductos();
+                } else {
+                    System.out.println("Sin errores. Guardando...");
+                    filaSeleccionadaProducto.setNombre(nombreProducto.getText());
+                    filaSeleccionadaProducto.setPrecio(Double.valueOf(precioProducto.getText()));
+                    filaSeleccionadaProducto.setDescripcion(descripcionProducto.getText());
+                    filaSeleccionadaProducto.setCategoria(categoriaProducto.getText());
+                    filaSeleccionadaProducto.setStock(Integer.valueOf(stockProducto.getText()));
+                    filaSeleccionadaProducto.setFechaModificacion(new SimpleDateFormat("dd/MM/yyy HH:mm").format(Calendar.getInstance().getTime()));
 
-                modoEditar(false);
-                tabsController.actualizarTabla();
+                    fechaModificacionProducto.setText(String.valueOf(filaSeleccionadaProducto.getFechaModificacion()));
+
+                    isAddOrEdit = "";
+                    modoEditAdd(false);
+                    tabsController.actualizarTabla();
+                }
             }
         });
 
@@ -336,16 +437,22 @@ public class VistaInformacionTabController implements Initializable {
         return codigo;
     }
 
-    public void modoEditar(boolean mode) {
+    public void modoEditAdd(boolean mode) {
+        System.out.println(isAddOrEdit);
         if (mode) {
             // se guardan los datos anteriores a la edición
-            rutaOld = filaSeleccionadaProducto.getRutaFoto();
-            nombreOld = nombreProducto.getText();
-            precioOld = precioProducto.getText();
-            descripcionOld = descripcionProducto.getText();
-            categoriaOld = categoriaProducto.getText();
-            stockOld = stockProducto.getText();
+            if (!isAddOrEdit.equals("Add")) {
+                idOld = filaSeleccionadaProducto.getCodigo();
+                rutaOld = filaSeleccionadaProducto.getRutaFoto();
+                nombreOld = nombreProducto.getText();
+                precioOld = precioProducto.getText();
+                descripcionOld = descripcionProducto.getText();
+                categoriaOld = categoriaProducto.getText();
+                stockOld = stockProducto.getText();
+            }
 
+            idProducto.setFocusColor(Color.rgb(230, 230, 0));
+            idProducto.setUnFocusColor(Color.rgb(42, 46, 55));
             nombreProducto.setFocusColor(Color.rgb(230, 230, 0));
             nombreProducto.setUnFocusColor(Color.rgb(42, 46, 55));
             precioProducto.setFocusColor(Color.rgb(230, 230, 0));
@@ -357,6 +464,8 @@ public class VistaInformacionTabController implements Initializable {
             stockProducto.setFocusColor(Color.rgb(230, 230, 0));
             stockProducto.setUnFocusColor(Color.rgb(42, 46, 55));
         } else {
+            idProducto.setFocusColor(Color.TRANSPARENT);
+            idProducto.setUnFocusColor(Color.TRANSPARENT);
             nombreProducto.setFocusColor(Color.TRANSPARENT);
             nombreProducto.setUnFocusColor(Color.TRANSPARENT);
             precioProducto.setFocusColor(Color.TRANSPARENT);
@@ -369,6 +478,24 @@ public class VistaInformacionTabController implements Initializable {
             stockProducto.setUnFocusColor(Color.TRANSPARENT);
         }
 
+        if (isAddOrEdit.equals("Add")) {
+            imagenProducto.setImage(null);
+            idProducto.setText("");
+            nombreProducto.setText("");
+            precioProducto.setText("");
+            descripcionProducto.setText("");
+            categoriaProducto.setText("");
+            stockProducto.setText("");
+            fechaAltaProducto.setText("");
+            fechaModificacionProducto.setText("");
+            comboBoxCodigosBarras.setVisible(false);
+            crear.setVisible(false);
+        } else {
+            comboBoxCodigosBarras.setVisible(true);
+            crear.setVisible(true);
+        }
+
+        idProducto.setEditable(mode);
         nombreProducto.setEditable(mode);
         precioProducto.setEditable(mode);
         descripcionProducto.setEditable(mode);
@@ -378,6 +505,15 @@ public class VistaInformacionTabController implements Initializable {
         anadir.setVisible(!mode);
         borrar.setVisible(!mode);
         editar.setVisible(!mode);
+        if (mode) {
+            if (isAddOrEdit.equals("Add")) {
+                addImagen.setVisible(true);
+            } else {
+                addImagen.setVisible(false);
+            }
+        } else {
+            addImagen.setVisible(false);
+        }
         cancelar.setVisible(mode);
         guardar.setVisible(mode);
     }
@@ -387,6 +523,7 @@ public class VistaInformacionTabController implements Initializable {
         Path currentRelativePath = Paths.get("");
         String s = currentRelativePath.toAbsolutePath().toString();
         s += "\\src\\img\\products\\" + f.getName();
+        System.out.println(s);
         return s;
     }
 

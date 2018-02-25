@@ -10,14 +10,8 @@ import controller.Inventario;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -30,7 +24,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import model.Producto;
 
 /**
@@ -93,7 +86,7 @@ public class VistaProductosTabController implements Initializable {
         precioColumn.setCellValueFactory(cellData -> cellData.getValue().preciosProperty());
         fechaAlta.setCellValueFactory(cellData -> cellData.getValue().fechaAltaProperty());
         imagenProducto.setCellValueFactory(cellData -> cellData.getValue().fotoProperty());
-                
+
         listeners();
 
     }
@@ -120,7 +113,7 @@ public class VistaProductosTabController implements Initializable {
                         // activo los tabs
                         tabsControler.activarTabs();
                         tabsControler.setFilaInformacion(filaSeleccionada);
-                        tabsControler.editarProducto(false);
+                        tabsControler.editAddProducto(false, "");
                         System.out.println("Double clicked");
                     }
                 }
@@ -134,8 +127,14 @@ public class VistaProductosTabController implements Initializable {
             // activo los tabs
             tabsControler.activarTabs();
             tabsControler.setFilaInformacion(this.filaSeleccionada);
-            tabsControler.editarProducto(false);
+            tabsControler.editAddProducto(false, "");
 
+        });
+        
+        anadir.setOnMouseClicked(e -> {
+            tabsControler.editAddProducto(true, "Add");
+            tabsControler.activarTabs();
+            tabsControler.setFilaInformacion(filaSeleccionada);
         });
 
         borrar.setOnMouseClicked((MouseEvent e)
@@ -159,7 +158,7 @@ public class VistaProductosTabController implements Initializable {
                 if (filaSeleccionada.getCodigo().equals(tabsControler.getCodigoInformacionProducto())) {
                     tabsControler.desactivarTabs();
                 }
-                
+
                 Producto selectedItem = tablaProductos.getSelectionModel().getSelectedItem();
                 if (selectedItem != null) {
                     inventario.getProductos().remove(selectedItem);
@@ -169,9 +168,9 @@ public class VistaProductosTabController implements Initializable {
         });
 
         editar.setOnMouseClicked(e -> {
+            tabsControler.editAddProducto(true, "Edit");
             tabsControler.activarTabs();
             tabsControler.setFilaInformacion(filaSeleccionada);
-            tabsControler.editarProducto(true);
         });
 
     }
@@ -183,29 +182,7 @@ public class VistaProductosTabController implements Initializable {
         //Añado la lista obervable a la tabla
         tablaProductos.setItems(this.inventario.getProductos());
 
-        filteredData = new FilteredList<>(inventario.getProductos());
-
-        categoria.setOnAction((t) -> {
-            
-            //Se hace scroll hasta arriba para evitar errores
-            tablaProductos.scrollTo(0);
-            
-            String categoriaElegida = categoria.getValue().toString();
-            filteredData.setPredicate(product -> {
-                if (categoriaElegida == null || categoriaElegida.isEmpty() || categoriaElegida.toLowerCase().equals("todas")) {
-                    return true;
-                }
-
-                if (product.getCategoria().toLowerCase().contains(categoriaElegida.toLowerCase())) {
-                    return true;
-                } 
-                return false;
-            });
-        });
-        SortedList<Producto> sortedData = new SortedList<>(filteredData);
-        sortedData.comparatorProperty().bind(tablaProductos.comparatorProperty());
-        tablaProductos.setItems(sortedData);
-        
+        crearFilteredData();
         rellenarComboBox();
 
     }
@@ -242,5 +219,32 @@ public class VistaProductosTabController implements Initializable {
         for (int i = 0; i < categorias.size(); i++) {
             categoria.getItems().add(categorias.get(i));
         }
+    }
+
+    private void crearFilteredData() {
+
+        filteredData = new FilteredList<>(inventario.getProductos());
+
+        categoria.setOnAction((t) -> {
+
+            //Se hace scroll hasta arriba para evitar errores
+            tablaProductos.scrollTo(0);
+
+            String categoriaElegida = categoria.getValue().toString();
+            filteredData.setPredicate(product -> {
+                if (categoriaElegida == null || categoriaElegida.isEmpty() || categoriaElegida.toLowerCase().equals("todas")) {
+                    return true;
+                }
+
+                if (product.getCategoria().toLowerCase().contains(categoriaElegida.toLowerCase())) {
+                    return true;
+                }
+                return false;
+            });
+        });
+        SortedList<Producto> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(tablaProductos.comparatorProperty());
+        tablaProductos.setItems(sortedData);
+
     }
 }

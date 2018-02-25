@@ -12,7 +12,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import model.Producto;
@@ -60,7 +59,7 @@ public class VistaTabsController implements Initializable {
         informacionController.comunicacionControlador(this);
     }
 
-    // redirigido a VistaProductosTabController desde Inventario
+    // redirigido desde Inventario
     public void setInventarioVistaTabs(Inventario inventario) {
 
         this.inventario = inventario;
@@ -69,8 +68,11 @@ public class VistaTabsController implements Initializable {
         productosController.setInventarioTabProductos(this.inventario);
         System.out.println("Inventario enviado a VistaProductosTabController");
         
-        estadisticasController.setInventarioTabProductos(this.inventario);
+        estadisticasController.setInventarioTabEstadisticas(this.inventario);
         System.out.println("Inventario enviado a VistaEstadisticasTabController");
+        
+        informacionController.setInventarioTabInformacion(this.inventario);
+        System.out.println("Inventario enviado a VistaInformacionTabController");
         
         setToolTips();
     }
@@ -116,9 +118,14 @@ public class VistaTabsController implements Initializable {
     public void desactivarTabs() {
         informacionTab.setDisable(true);
     }
+    
+    public void setTabProductos(){
+        Tabs.getSelectionModel().select(productosTab);
+    }
 
-    public void editarProducto(boolean mode) {
-        informacionController.modoEditar(mode);
+    public void editAddProducto(boolean mode, String isAddOrEdit) {
+        informacionController.isAddOrEdit = isAddOrEdit;
+        informacionController.modoEditAdd(mode);
     }
 
     public void actualizarTabla() {
