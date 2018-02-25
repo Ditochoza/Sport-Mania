@@ -37,7 +37,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 import javax.imageio.ImageIO;
-import model.JpgToPdf;
+import model.PDFHelper;
 import model.Producto;
 import net.sourceforge.jbarcodebean.JBarcodeBean;
 import net.sourceforge.jbarcodebean.model.Interleaved25;
@@ -314,7 +314,7 @@ public class VistaInformacionTabController implements Initializable {
 
                     }
                     try {
-                        JpgToPdf.jpgToPdf(carpetaImagenesCodigosBarras, selectedDirectory,
+                        PDFHelper.informacionProductoPDF(carpetaImagenesCodigosBarras, selectedDirectory,
                                 filaSeleccionadaProducto.getCodigo(), getRutaAbsoluta(filaSeleccionadaProducto.getRutaFoto()),
                                 filaSeleccionadaProducto.getNombre(), filaSeleccionadaProducto.getDescripcion(),
                                 filaSeleccionadaProducto.getCategoria(), filaSeleccionadaProducto.getPrecio());

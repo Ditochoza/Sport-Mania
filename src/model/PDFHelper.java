@@ -25,10 +25,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class JpgToPdf {
+public class PDFHelper {
 
 
-    public static void jpgToPdf(File carpetaImagenesCodigosBarras, File selectedDirectory, String codigo, String rutaAbsoluta, String nombre, String descripcion, String categoria, Double precio) throws FileNotFoundException, DocumentException, BadElementException, IOException {
+    public static void informacionProductoPDF(File carpetaImagenesCodigosBarras, File selectedDirectory, String codigo, String rutaAbsoluta, String nombre, String descripcion, String categoria, Double precio) throws FileNotFoundException, DocumentException, BadElementException, IOException {
         String outputFile = "CodigosBarras_" + codigo + "_" + new SimpleDateFormat("ddMMyyyHHmmssSS").format(Calendar.getInstance().getTime()) + ".pdf";
         List<String> files = new ArrayList<String>();
         for (final File fileEntry : carpetaImagenesCodigosBarras.listFiles()) {
