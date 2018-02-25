@@ -31,7 +31,7 @@
             <Insets bottom="20.0" right="20.0" />
          </BorderPane.margin>
          <children>
-            <Button fx:id="btnPdf" mnemonicParsing="false" onMouseClicked="#btnPdf_MouseClicked" text="Descargar" VBox.vgrow="NEVER" />
+            <Button fx:id="btnPdf_MouseClicked" mnemonicParsing="false" onMouseClicked="#btnPdf_MouseClicked" text="Descargar" VBox.vgrow="NEVER" />
          </children>
       </VBox>
    </bottom>

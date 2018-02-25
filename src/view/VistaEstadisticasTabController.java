@@ -49,7 +49,7 @@ import model.Producto;
 public class VistaEstadisticasTabController implements Initializable {
 
     private Inventario inventario;
-
+    
     VistaTabsController tabsController;
 
     @FXML
@@ -60,55 +60,56 @@ public class VistaEstadisticasTabController implements Initializable {
 
     @FXML
     private NumberAxis ejeY;
-
-    @FXML
+    
+     @FXML
     private Button btnPdf;
-
-    List<Producto> productos_datos;
+     
+     List<Producto> productos_datos;
     ArrayList<String> nombresProducto;
     XYChart.Series<String, Integer> serieDatos;
     ObservableList<String> datosEjeX;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        
     }
-
-    public void comunicacionControlador(VistaTabsController tabsController) {
+    
+    public void comunicacionControlador(VistaTabsController tabsController){
         this.tabsController = tabsController;
     }
 
     public void setInventarioTabProductos(Inventario inventario) {
 
         this.inventario = inventario;
-        addDatosGrafica();
+        addDatosGrafica();  
     }
-
-    public void quitarProducto(Producto producto) {
-
+    
+    
+    public void quitarProducto(Producto producto){
+        
         serieDatos.getData().clear();
         this.productos_datos.remove(producto);
         this.nombresProducto.clear();
         System.out.println(producto.getNombre());
         datosEjeX.clear();
         grafica.getData().clear();
-
+        
         System.out.println("Producto quitado");
         addDatosGrafica();
     }
-
-    public void actualizarStock(int stock) {
-        serieDatos.getData().clear();
-        grafica.getData().clear();
-        addDatosGrafica();
+    
+    public void actualizarStock(int stock){
+                serieDatos.getData().clear();
+                grafica.getData().clear();
+                addDatosGrafica();
 
     }
-
-    public void addDatosGrafica() {
-
+    
+    public void addDatosGrafica(){
+        
         productos_datos = inventario.getProductos();
         nombresProducto = new ArrayList<>();
-
+        
         System.out.println("Tamaño actual " + productos_datos.size());
 
         for (int i = 0; i < productos_datos.size(); i++) {
@@ -137,20 +138,19 @@ public class VistaEstadisticasTabController implements Initializable {
         // añadimos los datos a la gráfica
         grafica.getData().add(serieDatos);
     }
-
     @FXML
-    void graficoPDF(MouseEvent event) {
+    void btnPdf_MouseClicked(MouseEvent event) {
         try {
             //Generamos una imagen a partir de la grafica
             File file;
-
-            DirectoryChooser chooser = new DirectoryChooser();
-            chooser.setTitle("Elige destino de la guia en pdf");
-            chooser.setInitialDirectory(new File("c:/"));
-            File diectorioImagenGrafica = chooser.showDialog(inventario.getPrimaryStage());
-
-            String pathImagenGrafica = diectorioImagenGrafica + "\\grafica_productos_stock.png";
-            String pathPDF = diectorioImagenGrafica + "\\grafica_productos_stock.pdf";
+            
+               DirectoryChooser chooser = new DirectoryChooser();
+        chooser.setTitle("Elige destino de la guia en pdf");
+        chooser.setInitialDirectory(new File("c:/"));
+        File diectorioImagenGrafica = chooser.showDialog(inventario.getPrimaryStage());
+        
+        String pathImagenGrafica = diectorioImagenGrafica + "\\grafica_productos_stock.png";        
+        String pathPDF = diectorioImagenGrafica + "\\grafica_productos_stock.pdf";
 
             // genera imagen a partir de la grafica
             WritableImage image = grafica.snapshot(new SnapshotParameters(), null);
@@ -162,24 +162,24 @@ public class VistaEstadisticasTabController implements Initializable {
             PdfWriter.getInstance(document, new FileOutputStream(new File(pathPDF)));
             document.open();
 
-            Image imagenGrafico = Image.getInstance(new File(pathImagenGrafica).getAbsolutePath());
-            imagenGrafico.setAbsolutePosition(10, 500);
-            imagenGrafico.setBorderWidth(0);
-            imagenGrafico.scaleAbsolute(500, 200);
-            document.add(imagenGrafico);
+            Image imagenCodigoBarras = Image.getInstance(new File(pathImagenGrafica).getAbsolutePath());
+            imagenCodigoBarras.setAbsolutePosition(10, 500);
+            imagenCodigoBarras.setBorderWidth(0);
+            imagenCodigoBarras.scaleAbsolute(500, 200);
+            document.add(imagenCodigoBarras);
             document.close();
+            
+              //Muestro alerta
+        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+        alerta.setTitle("Éxito!");
+        alerta.setContentText("Imagen y pdf del gráfico descargado en: ("+pathImagenGrafica+")\n\n"
+                + "Se abrirá el archivo al cerrar el diálogo");
+        alerta.setHeaderText("Confirmación de descarga");
 
-            //Muestro alerta
-            Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
-            alerta.setTitle("Éxito!");
-            alerta.setContentText("Imagen y pdf del gráfico descargado en: (" + pathImagenGrafica + ")\n\n"
-                    + "Se abrirá el archivo al cerrar el diálogo");
-            alerta.setHeaderText("Confirmación de descarga");
-
-            //css dialog pane
-            DialogPane dialogAlert = alerta.getDialogPane();
-            dialogAlert.getStylesheets().add(getClass().getResource("../css/modena_dark.css").toExternalForm());
-            alerta.showAndWait();
+        //css dialog pane
+        DialogPane dialogAlert = alerta.getDialogPane();
+        dialogAlert.getStylesheets().add(getClass().getResource("../css/modena_dark.css").toExternalForm());
+        alerta.showAndWait();
 
             //Abrimos el pdf que se acaba de generar
             if (Desktop.isDesktopSupported()) {
