@@ -157,9 +157,14 @@ public class VistaProductosTabController implements Initializable {
                 // si se selecciona un producto que está abierto en la tab información, se deshabilitan las tabs
                 if (filaSeleccionada.getCodigo().equals(tabsControler.getCodigoInformacionProducto())) {
                     tabsControler.desactivarTabs();
+                    
                 }
 
                 Producto selectedItem = tablaProductos.getSelectionModel().getSelectedItem();
+                // actualizo grafica con los productos despues del borrado
+                tabsControler.borrarProductoChart(selectedItem);
+                
+                
                 if (selectedItem != null) {
                     inventario.getProductos().remove(selectedItem);
                 }
