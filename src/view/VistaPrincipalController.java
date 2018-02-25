@@ -162,7 +162,7 @@ public class VistaPrincipalController implements Initializable {
         //Muestro alerta
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);
         alerta.setTitle("Acerca de");
-        alerta.setContentText("Carlos Cicuentes " + "\n" + "Luis Gonzaga Muñoz" + "\n" + "Miguel Escanciano" + "\n" + "Valentín Circo" + "\n" + "Víctor Choza");
+        alerta.setContentText("Carlos Cicuéndez " + "\n" + "Luis Gonzaga Muñoz" + "\n" + "Miguel Escanciano" + "\n" + "Valentín Circo" + "\n" + "Víctor Choza");
         alerta.setHeaderText("Autores");
 
         //css dialog pane
