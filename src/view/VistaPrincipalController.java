@@ -116,7 +116,7 @@ public class VistaPrincipalController implements Initializable {
 
             URL url = new URL("https://drive.google.com/uc?authuser=0&id=1wO7gEoBFnwU_lICo54L85bluTUh66JBS&export=download");
             InputStream in = url.openStream();
-            OutputStream fos = new FileOutputStream(diectorio + "\\Guia_GestorInventariado");
+            OutputStream fos = new FileOutputStream(diectorio + "\\Guia_GestorInventariado.pdf");
 
             int length = -1;
             byte[] buffer = new byte[1024];

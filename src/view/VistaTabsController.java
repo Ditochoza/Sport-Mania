@@ -58,6 +58,11 @@ public class VistaTabsController implements Initializable {
         // envio este controlador a VistaProductosTabController y a VistaInformacionTabController
         productosController.comunicacionControlador(this);
         informacionController.comunicacionControlador(this);
+        estadisticasController.comunicacionControlador(this);
+    }
+    
+    public void borrarProductoChart(Producto producto){
+        estadisticasController.quitarProducto(producto);
     }
 
     // redirigido a VistaProductosTabController desde Inventario

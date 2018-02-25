@@ -29,6 +29,8 @@ import model.Producto;
 public class VistaEstadisticasTabController implements Initializable {
 
     private Inventario inventario;
+    
+    VistaTabsController tabsController;
 
     @FXML
     private BarChart<String, Integer> grafica;
@@ -41,30 +43,62 @@ public class VistaEstadisticasTabController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        
+    }
+    
+    public void comunicacionControlador(VistaTabsController tabsController){
+        this.tabsController = tabsController;
     }
 
     public void setInventarioTabProductos(Inventario inventario) {
 
         this.inventario = inventario;
-        List<Producto> datos = inventario.getProductos();
-        ArrayList<String> nombresProducto = new ArrayList<String>();
+        addDatosGrafica();
+        
+        
+    }
+    
+    
+    List<Producto> productos_datos;
+    ArrayList<String> nombresProducto;
+    XYChart.Series<String, Integer> serieDatos;
+    ObservableList<String> datosEjeX;
+    
+    public void quitarProducto(Producto producto){
+        
+        serieDatos.getData().clear();
+        this.productos_datos.remove(producto);
+        this.nombresProducto.clear();
+        System.out.println(producto.getNombre());
+        datosEjeX.clear();
+        grafica.getData().clear();
+        
+        System.out.println("Producto quitado");
+        addDatosGrafica();
+    }
+    
+    public void addDatosGrafica(){
+        
+        productos_datos = inventario.getProductos();
+        nombresProducto = new ArrayList<>();
+        
+        System.out.println("Tamaño actual " + productos_datos.size());
 
-        for (int i = 0; i < datos.size(); i++) {
-            Producto producto = datos.get(i);
+        for (int i = 0; i < productos_datos.size(); i++) {
+            Producto producto = productos_datos.get(i);
             nombresProducto.add(producto.getNombre());
         }
 
         // damos formato a los datos del eje X, convertimos de ArrayList a ObservableList, tiene que ser así porque la gráfica los requiere en dicho formato
-        ObservableList<String> datosEjeX = FXCollections.observableArrayList(nombresProducto);
+        datosEjeX = FXCollections.observableArrayList(nombresProducto);
         ejeX.setCategories(datosEjeX);
 
         // ahora vamos con el eje Y
         ejeY.setLabel("Stock");
-        XYChart.Series<String, Integer> serieDatos = new XYChart.Series<>();
+        serieDatos = new XYChart.Series<>();
         serieDatos.setName("Stock por producto");
-        for (int i = 0; i < datos.size(); i++) {
-            Producto producto = datos.get(i);
+        for (int i = 0; i < productos_datos.size(); i++) {
+            Producto producto = productos_datos.get(i);
             serieDatos.getData().add(new XYChart.Data<>(producto.getNombre(), producto.getStock()));
         }
 
