@@ -137,7 +137,7 @@ public class VistaPrincipalController implements Initializable {
         
         //Muestro alerta
         Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
-        alerta.setTitle("Éxito");
+        alerta.setTitle("Éxito!");
         alerta.setContentText("Guia pdf desargada en: " + diectorio + "\\Guia_GestorInventariado.pdf");
         alerta.setHeaderText("Confirmación de descarga");
 
