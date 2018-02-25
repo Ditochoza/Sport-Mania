@@ -64,6 +64,10 @@ public class VistaTabsController implements Initializable {
     public void borrarProductoChart(Producto producto){
         estadisticasController.quitarProducto(producto);
     }
+    
+    public void stockActualizado(int stock){
+        estadisticasController.actualizarStock(stock);
+    }
 
     // redirigido a VistaProductosTabController desde Inventario
     public void setInventarioVistaTabs(Inventario inventario) {

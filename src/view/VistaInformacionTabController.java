@@ -242,6 +242,9 @@ public class VistaInformacionTabController implements Initializable {
                 filaSeleccionadaProducto.setDescripcion(descripcionProducto.getText());
                 filaSeleccionadaProducto.setCategoria(categoriaProducto.getText());
                 filaSeleccionadaProducto.setStock(Integer.valueOf(stockProducto.getText()));
+                
+                // el stock actualizado se lo mando a VistaTabsController para que este a su vez actualize el grafico en EstadisticasController
+                tabsController.stockActualizado(Integer.valueOf(stockProducto.getText()));
                 filaSeleccionadaProducto.setFechaModificacion(new SimpleDateFormat("dd/MM/yyy HH:mm").format(Calendar.getInstance().getTime()));
 
                 fechaModificacionProducto.setText(String.valueOf(filaSeleccionadaProducto.getFechaModificacion()));
