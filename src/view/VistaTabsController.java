@@ -68,9 +68,11 @@ public class VistaTabsController implements Initializable {
 
         productosController.setInventarioTabProductos(this.inventario);
         System.out.println("Inventario enviado a VistaProductosTabController");
-
+        
+        estadisticasController.setInventarioTabProductos(this.inventario);
+        System.out.println("Inventario enviado a VistaEstadisticasTabController");
+        
         setToolTips();
-
     }
 
     public void activarTabs() {
