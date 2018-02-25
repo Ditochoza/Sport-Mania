@@ -30,7 +30,9 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.DialogPane;
 
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
@@ -161,6 +163,18 @@ public class VistaEstadisticasTabController implements Initializable {
             imagenCodigoBarras.scaleAbsolute(500, 200);
             document.add(imagenCodigoBarras);
             document.close();
+            
+              //Muestro alerta
+        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+        alerta.setTitle("Éxito!");
+        alerta.setContentText("Imagen y pdf del gráfico descargado en la raiz del proyecto ("+pathImagenGrafica+")\n\n"
+                + "Se abrirá el archivo al cerrar el diálogo");
+        alerta.setHeaderText("Confirmación de descarga");
+
+        //css dialog pane
+        DialogPane dialogAlert = alerta.getDialogPane();
+        dialogAlert.getStylesheets().add(getClass().getResource("../css/modena_dark.css").toExternalForm());
+        alerta.showAndWait();
 
             //Abrimos el pdf que se acaba de generar
             if (Desktop.isDesktopSupported()) {
