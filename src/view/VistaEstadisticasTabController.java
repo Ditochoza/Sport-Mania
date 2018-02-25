@@ -5,6 +5,7 @@
  */
 package view;
 
+import controller.Inventario;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
@@ -15,7 +16,7 @@ import javafx.fxml.Initializable;
  * @author CarlosLuisMiguelValentinVictor
  */
 public class VistaEstadisticasTabController implements Initializable {
-
+    private Inventario inventario;
     
     
     
@@ -25,4 +26,9 @@ public class VistaEstadisticasTabController implements Initializable {
         
     }    
    
+    
+    public void setInventarioTabProductos(Inventario inventario) {
+
+	        this.inventario = inventario;
+	}
 }
