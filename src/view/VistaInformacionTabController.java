@@ -9,6 +9,7 @@ import com.itextpdf.text.DocumentException;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+import controller.Inventario;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -50,6 +51,7 @@ public class VistaInformacionTabController implements Initializable {
 
     private Producto filaSeleccionadaProducto;
     private VistaTabsController tabsController;
+    private Inventario inventario;
 
     // datos antes de la edición
     private String rutaOld;
@@ -99,6 +101,12 @@ public class VistaInformacionTabController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         listeners();
     }
+    
+    public void setInventario(Inventario inventario){
+        this.inventario = inventario;
+        System.out.println("Inventario recibido " + inventario);
+
+    }
 
     public void comunicacionControlador(VistaTabsController tabsController) {
         this.tabsController = tabsController;
@@ -117,7 +125,7 @@ public class VistaInformacionTabController implements Initializable {
         stockProducto.setText(String.valueOf(filaSeleccionadaProducto.getStock()));
         fechaAltaProducto.setText(String.valueOf(filaSeleccionadaProducto.getFechaAlta()));
         fechaModificacionProducto.setText(String.valueOf(filaSeleccionadaProducto.getFechaModificacion()));
-
+        
         int numeroCodigosBarras = 100;
         if (filaSeleccionadaProducto.getStock() < numeroCodigosBarras) {
             numeroCodigosBarras = filaSeleccionadaProducto.getStock();

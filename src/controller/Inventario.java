@@ -29,6 +29,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import model.Empaquetador;
 import model.Producto;
+import view.VistaInformacionTabController;
 import view.VistaPrincipalController;
 import view.VistaTabsController;
 
@@ -45,7 +46,7 @@ public class Inventario extends Application {
     private BorderPane vistaTabs;
 
     public Inventario() {
-
+        
         // natacion
         productoss.add(new Producto("NA01011", "Aletas de buceo", "Deportes Acuáticos", 453, 21.49, crearImagen("aletasBuceo"), "Aletas de gran tamaño, perfectas para coger una gran velocidad", "../img/products/aletasBuceo.jpg"));
         productoss.add(new Producto("NA01012", "Gafas de buceo", "Deportes Acuáticos", 657, 15.99, crearImagen("gafasBuceo"), "Gafas de buceo profesionales", "../img/products/gafasBuceo.jpg"));
@@ -81,6 +82,9 @@ public class Inventario extends Application {
         productoss.add(new Producto("BE050014", "Gorra", "Beisbol", 879, 25.49, crearImagen("gorraBeisbol"), "Gorra para los deslumbramientos solares", "../img/products/gorraBeisbol.jpg"));
         productoss.add(new Producto("BE050015", "Guante catcher", "Beisbol", 120, 13.49, crearImagen("guanteBeisbol"), "Guante catcher de piel", "../img/products/guanteBeisbol.jpg"));
 
+        
+       enviarInventarioVistaInformacionTabController();
+
     }
 
     @Override
@@ -98,6 +102,21 @@ public class Inventario extends Application {
         //Muestro la vista persona
         muestraVistaTabs();
 
+    }
+    
+    public void enviarInventarioVistaInformacionTabController(){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/VistaInformacionTab.fxml"));
+        try {
+             loader.load();
+        } catch (IOException ex) {
+            Logger.getLogger(Inventario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //Doy al controlador acceso a la aplicación principal
+        VistaInformacionTabController controller = loader.getController();
+        controller.setInventario(this);
+        
+        System.out.println("Inventario enviado a VistaInformacionTabController");
     }
 
     public void initLayoutPrincipal() {
