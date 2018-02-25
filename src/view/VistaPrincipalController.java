@@ -7,6 +7,12 @@ package view;
 
 import controller.Inventario;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -95,7 +101,51 @@ public class VistaPrincipalController implements Initializable {
         }
     }
 
-    
+      @FXML
+    private void descargarGuiaPDF() throws MalformedURLException, FileNotFoundException, IOException{
+        
+ 
+        
+          try {
+            System.out.println("Descargando guía PDF en Carpeta del proyecto...");
+            
+            URL url = new URL("https://drive.google.com/uc?authuser=0&id=1wO7gEoBFnwU_lICo54L85bluTUh66JBS&export=download");
+ 
+            InputStream in = url.openStream();
+ 
+                
+            OutputStream fos = new FileOutputStream("guia.pdf");
+
+            int length = -1;
+
+            byte[] buffer = new byte[1024];
+
+            while((length = in.read(buffer)) != -1) {
+
+                fos.write(buffer, 0, length);
+                
+            }          
+            
+        
+
+        } catch (MalformedURLException e) {            
+
+            e.printStackTrace();
+
+        } catch (IOException e) {            
+
+            e.printStackTrace();
+
+        }
+          
+        
+
+        System.out.println("Descargada la guía existosamente.");
+        
+        System.exit (0);
+            
+            
+        }
     
     
     
