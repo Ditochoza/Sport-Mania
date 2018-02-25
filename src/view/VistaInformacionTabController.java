@@ -138,6 +138,8 @@ public class VistaInformacionTabController implements Initializable {
             stockProducto.setText(String.valueOf(filaSeleccionadaProducto.getStock()));
             fechaAltaProducto.setText(String.valueOf(filaSeleccionadaProducto.getFechaAlta()));
             fechaModificacionProducto.setText(String.valueOf(filaSeleccionadaProducto.getFechaModificacion()));
+            
+            comboBoxCodigosBarras.getItems().remove(0, comboBoxCodigosBarras.getItems().size());
 
             int numeroCodigosBarras = 100;
             if (filaSeleccionadaProducto.getStock() < numeroCodigosBarras) {
@@ -167,6 +169,8 @@ public class VistaInformacionTabController implements Initializable {
 
             if (alert.getResult() == ButtonType.YES) {
                 tabsController.eliminarProductoTabla(filaSeleccionadaProducto);
+                // actualizo grafica con los productos despues del borrado
+                tabsController.borrarProductoChart(filaSeleccionadaProducto);
             }
 
         });
@@ -226,8 +230,10 @@ public class VistaInformacionTabController implements Initializable {
             String erroresString = "";
 
             // errores imagen
-            if (imagenElegida == null) {
-                erroresString += " - No se ha elegido ninguna imagen\n";
+            if (isAddOrEdit.equals("Add")) {
+                if (imagenElegida == null) {
+                    erroresString += " - No se ha elegido ninguna imagen\n";
+                }
             }
 
             // errores id
@@ -334,6 +340,7 @@ public class VistaInformacionTabController implements Initializable {
                     tabsController.actualizarTabla();
                     tabsController.desactivarTabs();
                     tabsController.setTabProductos();
+                    tabsController.anadirProducto();
                 } else {
                     System.out.println("Sin errores. Guardando...");
                     filaSeleccionadaProducto.setNombre(nombreProducto.getText());
@@ -348,6 +355,7 @@ public class VistaInformacionTabController implements Initializable {
                     isAddOrEdit = "";
                     modoEditAdd(false);
                     tabsController.actualizarTabla();
+                    tabsController.stockActualizado(filaSeleccionadaProducto.getStock());
                 }
             }
         });

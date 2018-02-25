@@ -33,7 +33,7 @@ import model.Producto;
  */
 public class VistaProductosTabController implements Initializable {
 
-    private VistaTabsController tabsControler;
+    private VistaTabsController tabsController;
 
     private Producto filaSeleccionada;
 
@@ -111,9 +111,9 @@ public class VistaProductosTabController implements Initializable {
                 if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
                     if (mouseEvent.getClickCount() == 2) {
                         // activo los tabs
-                        tabsControler.activarTabs();
-                        tabsControler.setFilaInformacion(filaSeleccionada);
-                        tabsControler.editAddProducto(false, "");
+                        tabsController.activarTabs();
+                        tabsController.setFilaInformacion(filaSeleccionada);
+                        tabsController.editAddProducto(false, "");
                         System.out.println("Double clicked");
                     }
                 }
@@ -125,16 +125,16 @@ public class VistaProductosTabController implements Initializable {
             // cambio de tab al hacer click en ir a detalles boton, llamando al controller de los tabs general (VistaTabsController)
             // envio el objeto con los datos a VistaTabsControler para despues reenviarlo a VistaInformacionTabController
             // activo los tabs
-            tabsControler.activarTabs();
-            tabsControler.setFilaInformacion(this.filaSeleccionada);
-            tabsControler.editAddProducto(false, "");
+            tabsController.activarTabs();
+            tabsController.setFilaInformacion(this.filaSeleccionada);
+            tabsController.editAddProducto(false, "");
 
         });
-        
+
         anadir.setOnMouseClicked(e -> {
-            tabsControler.editAddProducto(true, "Add");
-            tabsControler.activarTabs();
-            tabsControler.setFilaInformacion(filaSeleccionada);
+            tabsController.editAddProducto(true, "Add");
+            tabsController.activarTabs();
+            tabsController.setFilaInformacion(filaSeleccionada);
         });
 
         borrar.setOnMouseClicked((MouseEvent e)
@@ -155,16 +155,15 @@ public class VistaProductosTabController implements Initializable {
 
             if (alert.getResult() == ButtonType.YES) {
                 // si se selecciona un producto que está abierto en la tab información, se deshabilitan las tabs
-                if (filaSeleccionada.getCodigo().equals(tabsControler.getCodigoInformacionProducto())) {
-                    tabsControler.desactivarTabs();
-                    
+                if (filaSeleccionada.getCodigo().equals(tabsController.getCodigoInformacionProducto())) {
+                    tabsController.desactivarTabs();
+
                 }
 
                 Producto selectedItem = tablaProductos.getSelectionModel().getSelectedItem();
                 // actualizo grafica con los productos despues del borrado
-                tabsControler.borrarProductoChart(selectedItem);
-                
-                
+                tabsController.borrarProductoChart(selectedItem);
+
                 if (selectedItem != null) {
                     inventario.getProductos().remove(selectedItem);
                 }
@@ -173,9 +172,9 @@ public class VistaProductosTabController implements Initializable {
         });
 
         editar.setOnMouseClicked(e -> {
-            tabsControler.editAddProducto(true, "Edit");
-            tabsControler.activarTabs();
-            tabsControler.setFilaInformacion(filaSeleccionada);
+            tabsController.editAddProducto(true, "Edit");
+            tabsController.activarTabs();
+            tabsController.setFilaInformacion(filaSeleccionada);
         });
 
     }
@@ -193,7 +192,7 @@ public class VistaProductosTabController implements Initializable {
     }
 
     public void comunicacionControlador(VistaTabsController tabsController) {
-        this.tabsControler = tabsController;
+        this.tabsController = tabsController;
     }
 
     public void eliminarProductoTabla(Producto filaSeleccionadaProducto) {
@@ -202,12 +201,19 @@ public class VistaProductosTabController implements Initializable {
 
     public void actualizarTabla() {
         tablaProductos.refresh();
+        crearFilteredData();
+        rellenarComboBox();
     }
 
     private void rellenarComboBox() {
+        // se recogen los productos
         ArrayList<Producto> productos = new ArrayList<>(inventario.getProductos());
         ArrayList<String> categorias = new ArrayList<>();
 
+        // se vacía el combobox
+        categoria.getItems().remove(0, categoria.getItems().size());
+
+        // se introducen todas las categorías sin repeticiones
         categorias.add("Todas");
         for (int i = 0; i < productos.size(); i++) {
             boolean repetido = false;
@@ -221,6 +227,7 @@ public class VistaProductosTabController implements Initializable {
             }
         }
 
+        // se cargan las categorías en el combobox
         for (int i = 0; i < categorias.size(); i++) {
             categoria.getItems().add(categorias.get(i));
         }

@@ -68,6 +68,10 @@ public class VistaTabsController implements Initializable {
         estadisticasController.actualizarStock(stock);
     }
 
+    void anadirProducto() {
+        estadisticasController.addProducto();
+    }
+
     // redirigido desde Inventario
     public void setInventarioVistaTabs(Inventario inventario) {
 

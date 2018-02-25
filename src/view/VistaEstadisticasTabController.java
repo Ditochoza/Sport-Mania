@@ -105,6 +105,13 @@ public class VistaEstadisticasTabController implements Initializable {
 
     }
     
+    public void addProducto(){
+        serieDatos.getData().clear();
+        datosEjeX.clear();
+        grafica.getData().clear();
+        addDatosGrafica();
+    }
+    
     public void addDatosGrafica(){
         
         productos_datos = inventario.getProductos();
