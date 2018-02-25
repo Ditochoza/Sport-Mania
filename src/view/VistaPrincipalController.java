@@ -19,6 +19,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DialogPane;
+import javafx.scene.control.ProgressIndicator;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 
 /**
@@ -32,17 +34,16 @@ public class VistaPrincipalController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
-    
-     //Referencia a la clase principal
+
+    //Referencia a la clase principal
     private Inventario inventario;
 
     //Es llamada por la clase Principal para tener una referencia de vuelta de si misma
     public void setInventarioReferencia(Inventario inventario) {
         this.inventario = inventario;
     }
-    
-    
-     //Creo una nueva libreta de direcciones en XML vacía
+
+    //Creo una nueva libreta de direcciones en XML vacía
     @FXML
     private void nuevo() {
         inventario.getProductos().clear();
@@ -81,7 +82,7 @@ public class VistaPrincipalController implements Initializable {
     //Abro un File Chooser para guardar como
     @FXML
     private void guardarComo() {
-        
+
         FileChooser fileChooser = new FileChooser();
 
         //Filtro para la extensión
@@ -101,55 +102,50 @@ public class VistaPrincipalController implements Initializable {
         }
     }
 
-      @FXML
-    private void descargarGuiaPDF() throws MalformedURLException, FileNotFoundException, IOException{
-        
- 
-        
-          try {
-            System.out.println("Descargando guía PDF en Carpeta del proyecto...");
-            
+    @FXML
+    private void descargarGuiaPDF() throws MalformedURLException, FileNotFoundException, IOException {
+
+        DirectoryChooser chooser = new DirectoryChooser();
+        chooser.setTitle("Elige destino de la guia en pdf");
+        chooser.setInitialDirectory(new File("c:/"));
+        File diectorio = chooser.showDialog(inventario.getPrimaryStage());
+
+
+        try {
+            System.out.println("Descargando guía PDF en: " + diectorio + "\\Guia_GestorInventariado.pdf");
+
             URL url = new URL("https://drive.google.com/uc?authuser=0&id=1wO7gEoBFnwU_lICo54L85bluTUh66JBS&export=download");
- 
             InputStream in = url.openStream();
- 
-                
-            OutputStream fos = new FileOutputStream("guia.pdf");
+            OutputStream fos = new FileOutputStream(diectorio + "\\Guia_GestorInventariado");
 
             int length = -1;
-
             byte[] buffer = new byte[1024];
 
-            while((length = in.read(buffer)) != -1) {
-
+            while ((length = in.read(buffer)) != -1) {
                 fos.write(buffer, 0, length);
-                
-            }          
-            
-        
+            }
 
-        } catch (MalformedURLException e) {            
+        } catch (MalformedURLException e) {
 
             e.printStackTrace();
 
-        } catch (IOException e) {            
+        } catch (IOException e) {
 
             e.printStackTrace();
 
         }
-          
         
+        //Muestro alerta
+        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+        alerta.setTitle("Éxito");
+        alerta.setContentText("Guia pdf desargada en: " + diectorio + "\\Guia_GestorInventariado.pdf");
+        alerta.setHeaderText("Confirmación de descarga");
 
-        System.out.println("Descargada la guía existosamente.");
-        
-        System.exit (0);
-            
-            
-        }
-    
-    
-    
-    
+        //css dialog pane
+        DialogPane dialogAlert = alerta.getDialogPane();
+        dialogAlert.getStylesheets().add(getClass().getResource("../css/modena_dark.css").toExternalForm());
+        alerta.showAndWait();
+    }
 
     //Salir
     @FXML
