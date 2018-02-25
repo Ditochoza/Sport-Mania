@@ -37,6 +37,7 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.stage.DirectoryChooser;
 import javax.imageio.ImageIO;
 import model.Producto;
 
@@ -143,11 +144,16 @@ public class VistaEstadisticasTabController implements Initializable {
         try {
             //Generamos una imagen a partir de la grafica
             File file;
-            String pathImagenGrafica = "./grafica_productos_stock.png";
-            String pathPDF = "./grafica_productos_stock.pdf";
+            
+               DirectoryChooser chooser = new DirectoryChooser();
+        chooser.setTitle("Elige destino de la guia en pdf");
+        chooser.setInitialDirectory(new File("c:/"));
+        File diectorioImagenGrafica = chooser.showDialog(inventario.getPrimaryStage());
+        
+        String pathImagenGrafica = diectorioImagenGrafica + "\\grafica_productos_stock.png";        
+        String pathPDF = diectorioImagenGrafica + "\\grafica_productos_stock.pdf";
 
-            // I. GENERAMOS UN FICHERO DE IMAGEN a partir de la gráfica
-            // --------------------------------------------------------
+            // genera imagen a partir de la grafica
             WritableImage image = grafica.snapshot(new SnapshotParameters(), null);
             file = new File(pathImagenGrafica);
             ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
@@ -167,7 +173,7 @@ public class VistaEstadisticasTabController implements Initializable {
               //Muestro alerta
         Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
         alerta.setTitle("Éxito!");
-        alerta.setContentText("Imagen y pdf del gráfico descargado en la raiz del proyecto ("+pathImagenGrafica+")\n\n"
+        alerta.setContentText("Imagen y pdf del gráfico descargado en: ("+pathImagenGrafica+")\n\n"
                 + "Se abrirá el archivo al cerrar el diálogo");
         alerta.setHeaderText("Confirmación de descarga");
 
