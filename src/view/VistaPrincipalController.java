@@ -110,7 +110,6 @@ public class VistaPrincipalController implements Initializable {
         chooser.setInitialDirectory(new File("c:/"));
         File diectorio = chooser.showDialog(inventario.getPrimaryStage());
 
-
         try {
             System.out.println("Descargando guía PDF en: " + diectorio + "\\Guia_GestorInventariado.pdf");
 
@@ -124,6 +123,16 @@ public class VistaPrincipalController implements Initializable {
             while ((length = in.read(buffer)) != -1) {
                 fos.write(buffer, 0, length);
             }
+            //Muestro alerta
+            Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+            alerta.setTitle("Éxito!");
+            alerta.setContentText("Guia pdf desargada en: " + diectorio + "\\Guia_GestorInventariado.pdf");
+            alerta.setHeaderText("Confirmación de descarga");
+
+            //css dialog pane
+            DialogPane dialogAlert = alerta.getDialogPane();
+            dialogAlert.getStylesheets().add(getClass().getResource("../css/modena_dark.css").toExternalForm());
+            alerta.showAndWait();
 
         } catch (MalformedURLException e) {
 
@@ -134,17 +143,7 @@ public class VistaPrincipalController implements Initializable {
             e.printStackTrace();
 
         }
-        
-        //Muestro alerta
-        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
-        alerta.setTitle("Éxito!");
-        alerta.setContentText("Guia pdf desargada en: " + diectorio + "\\Guia_GestorInventariado.pdf");
-        alerta.setHeaderText("Confirmación de descarga");
 
-        //css dialog pane
-        DialogPane dialogAlert = alerta.getDialogPane();
-        dialogAlert.getStylesheets().add(getClass().getResource("../css/modena_dark.css").toExternalForm());
-        alerta.showAndWait();
     }
 
     //Salir
