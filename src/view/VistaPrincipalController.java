@@ -111,11 +111,12 @@ public class VistaPrincipalController implements Initializable {
         File diectorio = chooser.showDialog(inventario.getPrimaryStage());
 
         try {
-            System.out.println("Descargando guía PDF en: " + diectorio + "\\Guia_GestorInventariado.pdf");
+            System.out.println("Descargando guía PDF en: " + diectorio + "\\Guia_GestorDeInventarios.pdf");
 
-            URL url = new URL("https://drive.google.com/uc?authuser=0&id=1wO7gEoBFnwU_lICo54L85bluTUh66JBS&export=download");
+            URL url = new URL("https://drive.google.com/uc?authuser=0&id=1zZJt8bHlLi0nmrPZ1mpyagqphVi6sIGZ&export=download");
+             
             InputStream in = url.openStream();
-            OutputStream fos = new FileOutputStream(diectorio + "\\Guia_GestorInventariado.pdf");
+            OutputStream fos = new FileOutputStream(diectorio + "\\Guia_GestorDeInventarios.pdf");
 
             int length = -1;
             byte[] buffer = new byte[1024];
@@ -126,7 +127,7 @@ public class VistaPrincipalController implements Initializable {
             //Muestro alerta
             Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
             alerta.setTitle("Éxito!");
-            alerta.setContentText("Guia pdf desargada en: " + diectorio + "\\Guia_GestorInventariado.pdf");
+            alerta.setContentText("Guia pdf desargada en: " + diectorio + "\\Guia_GestorDeInventarios.pdf");
             alerta.setHeaderText("Confirmación de descarga");
 
             //css dialog pane
@@ -143,7 +144,7 @@ public class VistaPrincipalController implements Initializable {
             e.printStackTrace();
 
         }
-
+      System.gc();
     }
 
     //Salir
