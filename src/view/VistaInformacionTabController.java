@@ -108,12 +108,6 @@ public class VistaInformacionTabController implements Initializable {
         listeners();
     }
 
-    public void setInventario(Inventario inventario) {
-        this.inventario = inventario;
-        System.out.println("Inventario recibido " + inventario);
-
-    }
-
     public void comunicacionControlador(VistaTabsController tabsController) {
         this.tabsController = tabsController;
     }
@@ -125,7 +119,7 @@ public class VistaInformacionTabController implements Initializable {
 
     // recibo la fila seleccionada de VistaTabController que a su vez lo ha recibido de VistaProductosTabController
     public void setFilaInformacion(Producto newValue) {
-        if (!isAddOrEdit.equals("Add")) {
+      if (!isAddOrEdit.equals("Add")) {
             this.filaSeleccionadaProducto = newValue;
             System.out.println(filaSeleccionadaProducto.getCodigo());
 
@@ -257,10 +251,7 @@ public class VistaInformacionTabController implements Initializable {
                             erroresString += " - El ID debe ser de 7 caracteres\n";
                             idProducto.setUnFocusColor(Color.RED);
                         } else {
-                            System.out.println(idProducto.getText().substring(0, 2) + " " + idProducto.getText().substring(2));
-                            System.out.println(idProducto.getText().substring(0, 2).matches(".*[a-zA-Z].*"));
-                            System.out.println(idProducto.getText().substring(2).matches(".*[0-9].*"));
-                            if (idProducto.getText().substring(0, 2).matches(".*[a-zA-Z].*") && idProducto.getText().substring(2).matches(".*[0-9].*")) {
+                            if (idProducto.getText().substring(0, 2).matches("[a-zA-Z]+") && idProducto.getText().substring(2).matches("[0-9]+")) {
                                 idProducto.setUnFocusColor(Color.rgb(42, 46, 55));
                             } else {
                                 erroresString += " - El ID debe contener 2 letras y 5 números\n";
@@ -531,7 +522,6 @@ public class VistaInformacionTabController implements Initializable {
         Path currentRelativePath = Paths.get("");
         String s = currentRelativePath.toAbsolutePath().toString();
         s += "\\src\\img\\products\\" + f.getName();
-        System.out.println(s);
         return s;
     }
 

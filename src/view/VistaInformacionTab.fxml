@@ -39,20 +39,20 @@
                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                             </columnConstraints>
                                             <rowConstraints>
-                                    <RowConstraints minHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                 <RowConstraints minHeight="20.0" vgrow="SOMETIMES" />
                                                 <RowConstraints minHeight="20.0" vgrow="SOMETIMES" />
                                                 <RowConstraints minHeight="20.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                             <children>
-                                    <Label layoutX="20.0" layoutY="54.0" text="ID">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                       <GridPane.margin>
-                                          <Insets left="10.0" />
-                                       </GridPane.margin>
-                                    </Label>
+                                                <Label layoutX="20.0" layoutY="54.0" text="ID">
+                                                    <font>
+                                                        <Font size="14.0" />
+                                                    </font>
+                                                    <GridPane.margin>
+                                                        <Insets left="10.0" />
+                                                    </GridPane.margin>
+                                                </Label>
                                                 <Label text="Nombre" GridPane.rowIndex="1">
                                                     <GridPane.margin>
                                                         <Insets left="10.0" />
@@ -77,26 +77,26 @@
                                                         <Font size="14.0" />
                                                     </font>
                                                 </Label>
-                                    <JFXTextField fx:id="idProducto" editable="false" focusColor="TRANSPARENT" layoutX="115.0" layoutY="51.0" unFocusColor="TRANSPARENT" GridPane.columnIndex="1">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </JFXTextField>
-                                    <JFXTextField fx:id="nombreProducto" editable="false" focusColor="TRANSPARENT" unFocusColor="TRANSPARENT" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </JFXTextField>
-                                    <JFXTextField fx:id="precioProducto" editable="false" focusColor="TRANSPARENT" unFocusColor="TRANSPARENT" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </JFXTextField>
-                                    <JFXTextField fx:id="descripcionProducto" editable="false" focusColor="TRANSPARENT" unFocusColor="TRANSPARENT" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </JFXTextField>
+                                                <JFXTextField fx:id="idProducto" editable="false" focusColor="TRANSPARENT" layoutX="115.0" layoutY="51.0" unFocusColor="TRANSPARENT" GridPane.columnIndex="1">
+                                                    <GridPane.margin>
+                                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                    </GridPane.margin>
+                                                </JFXTextField>
+                                                <JFXTextField fx:id="nombreProducto" editable="false" focusColor="TRANSPARENT" unFocusColor="TRANSPARENT" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                    <GridPane.margin>
+                                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                    </GridPane.margin>
+                                                </JFXTextField>
+                                                <JFXTextField fx:id="precioProducto" editable="false" focusColor="TRANSPARENT" unFocusColor="TRANSPARENT" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                    <GridPane.margin>
+                                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                    </GridPane.margin>
+                                                </JFXTextField>
+                                                <JFXTextField fx:id="descripcionProducto" editable="false" focusColor="TRANSPARENT" unFocusColor="TRANSPARENT" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                    <GridPane.margin>
+                                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                    </GridPane.margin>
+                                                </JFXTextField>
                                             </children>
                                         </GridPane>
                                     </children>
@@ -149,26 +149,26 @@
                                                 <Insets left="10.0" />
                                             </GridPane.margin>
                                         </Label>
-                              <JFXTextField fx:id="categoriaProducto" editable="false" focusColor="TRANSPARENT" unFocusColor="TRANSPARENT" GridPane.columnIndex="1">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                              </JFXTextField>
-                              <JFXTextField fx:id="stockProducto" editable="false" focusColor="TRANSPARENT" unFocusColor="TRANSPARENT" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                              </JFXTextField>
-                              <JFXTextField fx:id="fechaAltaProducto" editable="false" focusColor="TRANSPARENT" unFocusColor="TRANSPARENT" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                              </JFXTextField>
-                              <JFXTextField fx:id="fechaModificacionProducto" editable="false" focusColor="TRANSPARENT" unFocusColor="TRANSPARENT" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                              </JFXTextField>
+                                        <JFXTextField fx:id="categoriaProducto" editable="false" focusColor="TRANSPARENT" unFocusColor="TRANSPARENT" GridPane.columnIndex="1">
+                                            <GridPane.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                            </GridPane.margin>
+                                        </JFXTextField>
+                                        <JFXTextField fx:id="stockProducto" editable="false" focusColor="TRANSPARENT" unFocusColor="TRANSPARENT" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                            <GridPane.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                            </GridPane.margin>
+                                        </JFXTextField>
+                                        <JFXTextField fx:id="fechaAltaProducto" editable="false" focusColor="TRANSPARENT" unFocusColor="TRANSPARENT" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                            <GridPane.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                            </GridPane.margin>
+                                        </JFXTextField>
+                                        <JFXTextField fx:id="fechaModificacionProducto" editable="false" focusColor="TRANSPARENT" unFocusColor="TRANSPARENT" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                            <GridPane.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                            </GridPane.margin>
+                                        </JFXTextField>
                                     </children>
                                 </GridPane>
                                 <AnchorPane>
@@ -181,9 +181,9 @@
                                         <HBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
                                             <children>
                                                 <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
-                                       <image>
-                                          <Image url="@../img/others/barCode.jpg" />
-                                       </image>
+                                                    <image>
+                                                        <Image url="@../img/others/barCode.jpg" />
+                                                    </image>
                                                 </ImageView>
                                             </children>
                                         </HBox>
@@ -224,8 +224,8 @@
                 <Button fx:id="editar" mnemonicParsing="false" prefHeight="20.0" prefWidth="80.0" text="Editar" />
                 <Button fx:id="borrar" mnemonicParsing="false" prefHeight="20.0" prefWidth="80.0" text="Borrar" />
                 <Pane HBox.hgrow="ALWAYS" />
-            <Button fx:id="addImagen" layoutX="354.0" layoutY="10.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="120.0" text="Añadir Imagen" visible="false" />
-            <Button fx:id="cancelar" mnemonicParsing="false" prefHeight="20.0" prefWidth="80.0" text="Cancelar" visible="false" />
+                <Button fx:id="addImagen" layoutX="354.0" layoutY="10.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="120.0" text="Añadir Imagen" visible="false" />
+                <Button fx:id="cancelar" mnemonicParsing="false" prefHeight="20.0" prefWidth="80.0" text="Cancelar" visible="false" />
                 <Button fx:id="guardar" mnemonicParsing="false" prefHeight="20.0" prefWidth="80.0" text="Guardar" visible="false">
                     <HBox.margin>
                         <Insets />

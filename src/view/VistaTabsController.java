@@ -72,7 +72,7 @@ public class VistaTabsController implements Initializable {
         estadisticasController.addProducto();
     }
 
-    // redirigido desde Inventario
+    // redirigido a VistaProductosTabController desde Inventario
     public void setInventarioVistaTabs(Inventario inventario) {
 
         this.inventario = inventario;
@@ -81,7 +81,7 @@ public class VistaTabsController implements Initializable {
         productosController.setInventarioTabProductos(this.inventario);
         System.out.println("Inventario enviado a VistaProductosTabController");
         
-        estadisticasController.setInventarioTabEstadisticas(this.inventario);
+        estadisticasController.setInventarioTabProductos(this.inventario);
         System.out.println("Inventario enviado a VistaEstadisticasTabController");
         
         informacionController.setInventarioTabInformacion(this.inventario);

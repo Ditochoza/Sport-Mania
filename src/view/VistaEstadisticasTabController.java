@@ -78,7 +78,7 @@ public class VistaEstadisticasTabController implements Initializable {
         this.tabsController = tabsController;
     }
 
-    public void setInventarioTabEstadisticas(Inventario inventario) {
+    public void setInventarioTabProductos(Inventario inventario) {
 
         this.inventario = inventario;
         addDatosGrafica();  

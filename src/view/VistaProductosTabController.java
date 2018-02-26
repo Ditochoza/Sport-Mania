@@ -86,7 +86,7 @@ public class VistaProductosTabController implements Initializable {
         precioColumn.setCellValueFactory(cellData -> cellData.getValue().preciosProperty());
         fechaAlta.setCellValueFactory(cellData -> cellData.getValue().fechaAltaProperty());
         imagenProducto.setCellValueFactory(cellData -> cellData.getValue().fotoProperty());
-
+                
         listeners();
 
     }
@@ -137,6 +137,7 @@ public class VistaProductosTabController implements Initializable {
             tabsController.setFilaInformacion(filaSeleccionada);
         });
 
+
         borrar.setOnMouseClicked((MouseEvent e)
                 -> {
             String borrarString = " > Código: " + filaSeleccionada.getCodigo() + "\n > Nombre: " + filaSeleccionada.getNombre() + "\n > Stock: " + filaSeleccionada.getStock() + " uds."
@@ -157,13 +158,14 @@ public class VistaProductosTabController implements Initializable {
                 // si se selecciona un producto que está abierto en la tab información, se deshabilitan las tabs
                 if (filaSeleccionada.getCodigo().equals(tabsController.getCodigoInformacionProducto())) {
                     tabsController.desactivarTabs();
-
+                    
                 }
-
+                
                 Producto selectedItem = tablaProductos.getSelectionModel().getSelectedItem();
                 // actualizo grafica con los productos despues del borrado
                 tabsController.borrarProductoChart(selectedItem);
-
+                
+                
                 if (selectedItem != null) {
                     inventario.getProductos().remove(selectedItem);
                 }
